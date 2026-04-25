@@ -65,3 +65,11 @@ next-env.d.ts
 
 # local reference / handoff material (not for the repo)
 GUIDE/
+
+# playwright MCP cache + screenshots dropped at repo root
+.playwright-mcp/
+/home-*.png
+/scan-*.png
+
+# orphan draft files (working scratchpads, not source)
+*.clean
