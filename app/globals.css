@@ -59,6 +59,14 @@
   opacity: 0.04;
 }
 
+/* Editorial hero wash — soft cobalt at top-right, neutral at bottom-left */
+.hero-wash {
+  background:
+    radial-gradient(70% 55% at 90% 0%, rgba(17, 92, 185, 0.14), transparent 60%),
+    radial-gradient(60% 45% at 0% 100%, rgba(219, 231, 251, 0.55), transparent 60%),
+    var(--color-bg);
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-ink);
