@@ -55,7 +55,7 @@ export function VerdictCard({ result, onScanAgain }: VerdictCardProps) {
           {/* Product name (or fallback) */}
           <h1
             className={[
-              'font-serif leading-tight tracking-editorial',
+              'font-bold leading-tight tracking-tight',
               isAvoid ? 'text-primary-on' : 'text-ink',
             ].join(' ')}
             style={{ fontSize: 28 }}
@@ -65,7 +65,7 @@ export function VerdictCard({ result, onScanAgain }: VerdictCardProps) {
           {product.brand && (
             <div
               className={[
-                'text-sm italic mt-1',
+                'text-sm mt-1',
                 isAvoid ? 'text-primary-on/70' : 'text-ink-variant',
               ].join(' ')}
             >

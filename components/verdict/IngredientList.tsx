@@ -21,7 +21,7 @@ export function IngredientList({ ingredients }: IngredientListProps) {
         aria-expanded={expanded}
       >
         <div className="text-left">
-          <div className="font-serif text-lg text-ink">All ingredients</div>
+          <div className="font-semibold text-base text-ink tracking-tight">All ingredients</div>
           <div className="text-xs text-ink-variant mt-0.5">
             {ingredients.length} detected
           </div>

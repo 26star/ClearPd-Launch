@@ -33,11 +33,11 @@ export function UnknownProductPrompt({ result }: UnknownProductPromptProps) {
             Help build ClearPD
           </div>
           <h2
-            className="font-serif text-ink leading-tight tracking-editorial"
+            className="text-ink font-semibold tracking-tight leading-tight"
             style={{ fontSize: 22 }}
           >
             We don&rsquo;t have enough data on{' '}
-            <span className="italic">
+            <span className="font-bold">
               {product.name || 'this product'}
             </span>{' '}
             yet.

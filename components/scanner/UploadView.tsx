@@ -68,11 +68,12 @@ export function UploadView({ onBarcode, onText, busy }: UploadViewProps) {
       />
 
       {preview ? (
-        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-surface-container">
-          <img src={preview} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-surface-container ring-1 ring-outline-variant/30">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={preview} alt="Uploaded label preview" className="absolute inset-0 w-full h-full object-cover" />
           {status && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-              <div className="bg-surface-lowest rounded-2xl px-5 py-3 text-sm font-medium">
+            <div className="absolute inset-0 flex items-center justify-center bg-ink/40 backdrop-blur-sm">
+              <div className="bg-surface-lowest rounded-full px-5 py-2.5 text-[13px] font-medium text-ink shadow-card">
                 {status}
               </div>
             </div>
@@ -83,14 +84,19 @@ export function UploadView({ onBarcode, onText, busy }: UploadViewProps) {
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={busy}
-          className="aspect-[3/4] w-full rounded-3xl border-2 border-dashed border-outline-variant bg-surface-low flex flex-col items-center justify-center gap-3 disabled:opacity-50"
+          className="group aspect-[3/4] w-full rounded-3xl border border-dashed border-outline-variant bg-surface-low flex flex-col items-center justify-center gap-3 disabled:opacity-50 hover:bg-surface-container/60 hover:border-secondary/40 transition"
         >
-          <span className="material-symbols-outlined text-ink-variant" style={{ fontSize: 48 }}>
-            add_photo_alternate
+          <span
+            className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-surface-lowest ring-1 ring-outline-variant/40 text-ink-variant group-hover:text-secondary transition"
+            aria-hidden
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: 28 }}>
+              add_photo_alternate
+            </span>
           </span>
-          <span className="text-sm font-medium text-ink">Upload a photo</span>
-          <span className="text-xs text-ink-variant max-w-[220px] text-center">
-            Barcode or ingredient label — we&rsquo;ll try both
+          <span className="text-[15px] font-medium text-ink">Upload a photo</span>
+          <span className="text-[12px] text-ink-variant max-w-[240px] text-center">
+            Barcode or ingredient label &mdash; we&rsquo;ll try both
           </span>
         </button>
       )}
@@ -103,7 +109,7 @@ export function UploadView({ onBarcode, onText, busy }: UploadViewProps) {
             setPhase('idle')
             if (inputRef.current) inputRef.current.value = ''
           }}
-          className="w-full text-center text-sm text-secondary font-medium"
+          className="w-full text-center text-[13px] text-secondary font-medium hover:underline"
         >
           Choose a different photo
         </button>

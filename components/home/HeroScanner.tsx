@@ -6,9 +6,20 @@ import { ScanResponse } from '@/lib/scanner/types'
 import { VerdictCard } from '@/components/verdict/VerdictCard'
 import { UnknownProductPrompt } from '@/components/flywheel/UnknownProductPrompt'
 
-// ProductScanner uses browser-only APIs (camera, WASM, Tesseract). Never SSR.
+/**
+ * Homepage scanner wrapper.
+ *
+ * Architecture is unchanged from the canonical scanner: this just hosts the
+ * result state and lazy-loads the existing ProductScanner (which orchestrates
+ * PhaseToggle, ModeTabs, CameraView, UploadView, PasteView).
+ *
+ * All visual polish lives inside the leaf components (PasteView, ModeTabs, …)
+ * and inside the surrounding card on this file. No logic / props / control
+ * flow has been changed.
+ */
 const ProductScanner = dynamic(
-  () => import('@/components/scanner/ProductScanner').then(m => m.ProductScanner),
+  () =>
+    import('@/components/scanner/ProductScanner').then((m) => m.ProductScanner),
   {
     ssr: false,
     loading: () => (
@@ -19,18 +30,12 @@ const ProductScanner = dynamic(
   }
 )
 
-/**
- * Hero scanner — the spec'd 3-mode ProductScanner (Camera / Upload / Paste)
- * embedded into the homepage hero. Keeps the canonical phase toggle + mode
- * tabs from /scan; only difference is it lives inside the hero `text-center`
- * column and switches to a left-aligned card on result.
- */
 export function HeroScanner() {
   const [result, setResult] = useState<ScanResponse | null>(null)
 
   if (result) {
     return (
-      <div className="rounded-3xl bg-surface-lowest border border-outline-variant/40 shadow-elevated overflow-hidden text-left">
+      <div className="rounded-[32px] bg-surface-lowest shadow-elevated overflow-hidden">
         <VerdictCard result={result} onScanAgain={() => setResult(null)} />
         <UnknownProductPrompt result={result} />
       </div>
@@ -38,8 +43,8 @@ export function HeroScanner() {
   }
 
   return (
-    <div className="text-left">
-      <ProductScanner onResult={setResult} hidePhase />
+    <div className="rounded-[32px] bg-surface-lowest shadow-elevated ring-1 ring-outline-variant/20 pt-6 pb-2">
+      <ProductScanner onResult={setResult} />
     </div>
   )
 }

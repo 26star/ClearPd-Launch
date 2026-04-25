@@ -143,7 +143,7 @@ export default function HomePage() {
       {/* TOP BAR ─────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 bg-bg/80 backdrop-blur-md border-b border-outline-variant/30">
         <div className="flex items-center justify-between px-6 py-4 safe-pt max-w-6xl mx-auto">
-          <Link href="/" className="font-serif italic text-2xl tracking-tighter text-ink">
+          <Link href="/" className="text-xl font-semibold tracking-tight text-ink">
             ClearPD
           </Link>
           <nav className="flex items-center gap-6 text-sm">
@@ -161,16 +161,16 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto px-5 pt-16 sm:pt-24 pb-16 sm:pb-24 text-center">
           <h1
             id="hero-heading"
-            className="font-serif text-ink leading-[1.04] tracking-editorial"
-            style={{ fontSize: 'clamp(40px, 7vw, 64px)' }}
+            className="text-ink font-semibold tracking-tighter leading-[1.04]"
+            style={{ fontSize: 'clamp(40px, 7vw, 56px)' }}
           >
-            Clinical Skincare Intelligence,{' '}
-            <span className="italic">Synthesized.</span>
+            Is your product safe for perioral dermatitis?
           </h1>
 
           <p className="mt-5 text-[15px] sm:text-base text-ink-variant leading-relaxed max-w-xl mx-auto">
-            Data-backed safety for perioral dermatitis. 100% human-sourced
-            from thousands of observations.
+            Paste any ingredient list &mdash; skincare, toothpaste, makeup.
+            Instantly flag the 40+ ingredients known to trigger PD flares.
+            Free, no signup.
           </p>
 
           {/* Pill-shaped scanner — section 3 */}
@@ -197,7 +197,7 @@ export default function HomePage() {
         <section className="px-5 mt-10 space-y-3" aria-label="About perioral dermatitis">
           <details className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h2 className="font-serif text-ink tracking-editorial" style={{ fontSize: 22 }}>
+              <h2 className="text-ink font-bold tracking-tight" style={{ fontSize: 22 }}>
                 What is perioral dermatitis?
               </h2>
               <span className="material-symbols-outlined text-ink-variant transition-transform group-open:rotate-180" style={{ fontSize: 24 }}>
@@ -216,7 +216,7 @@ export default function HomePage() {
 
           <details className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h2 className="font-serif text-ink tracking-editorial" style={{ fontSize: 22 }}>
+              <h2 className="text-ink font-bold tracking-tight" style={{ fontSize: 22 }}>
                 What triggers perioral dermatitis?
               </h2>
               <span className="material-symbols-outlined text-ink-variant transition-transform group-open:rotate-180" style={{ fontSize: 24 }}>
@@ -236,7 +236,7 @@ export default function HomePage() {
 
         {/* 6. CATEGORY GRID ────────────────────────────────────────────── */}
         <section className="px-5 mt-12" aria-labelledby="categories-heading">
-          <h2 id="categories-heading" className="font-serif text-ink tracking-editorial" style={{ fontSize: 26 }}>
+          <h2 id="categories-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
             Check by category
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
@@ -250,7 +250,7 @@ export default function HomePage() {
                 className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 p-4 hover:border-secondary/50 hover:shadow-card transition"
               >
                 <div className="flex items-start justify-between">
-                  <h3 className="font-serif text-ink tracking-editorial" style={{ fontSize: 18 }}>
+                  <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 18 }}>
                     {c.title}
                   </h3>
                   <span className="material-symbols-outlined text-outline group-hover:text-secondary transition" style={{ fontSize: 18 }}>
@@ -265,7 +265,7 @@ export default function HomePage() {
 
         {/* 7. FEATURED INGREDIENTS ─────────────────────────────────────── */}
         <section className="px-5 mt-12" aria-labelledby="ingredients-heading">
-          <h2 id="ingredients-heading" className="font-serif text-ink tracking-editorial" style={{ fontSize: 26 }}>
+          <h2 id="ingredients-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
             Featured ingredients
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
@@ -279,7 +279,7 @@ export default function HomePage() {
                 className="rounded-2xl bg-surface-lowest border border-outline-variant/40 p-4 hover:border-secondary/50 hover:shadow-card transition"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-serif text-ink tracking-editorial" style={{ fontSize: 17 }}>
+                  <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 17 }}>
                     {i.name}
                   </h3>
                   <span className={`shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider ${verdictClasses(i.tone)}`}>
@@ -294,7 +294,7 @@ export default function HomePage() {
 
         {/* 8. FEATURED PRODUCTS ────────────────────────────────────────── */}
         <section className="px-5 mt-12" aria-labelledby="products-heading">
-          <h2 id="products-heading" className="font-serif text-ink tracking-editorial" style={{ fontSize: 26 }}>
+          <h2 id="products-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
             Featured products
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
@@ -308,7 +308,7 @@ export default function HomePage() {
                 className="rounded-2xl bg-surface-lowest border border-outline-variant/40 p-4 hover:border-secondary/50 hover:shadow-card transition"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-serif text-ink tracking-editorial" style={{ fontSize: 17 }}>
+                  <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 17 }}>
                     {p.name}
                   </h3>
                   <span className={`shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider ${verdictClasses(p.tone)}`}>
@@ -323,7 +323,7 @@ export default function HomePage() {
 
         {/* 9. FAQ ──────────────────────────────────────────────────────── */}
         <section id="faq" className="scroll-mt-20 px-5 mt-12" aria-labelledby="faq-heading">
-          <h2 id="faq-heading" className="font-serif text-ink tracking-editorial" style={{ fontSize: 26 }}>
+          <h2 id="faq-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
             Frequently asked
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
@@ -348,7 +348,7 @@ export default function HomePage() {
 
         {/* 10. ABOUT ───────────────────────────────────────────────────── */}
         <section id="about" className="scroll-mt-20 px-5 mt-12" aria-labelledby="about-heading">
-          <h2 id="about-heading" className="font-serif text-ink tracking-editorial" style={{ fontSize: 26 }}>
+          <h2 id="about-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
             About ClearPD
           </h2>
           <div className="mt-4 rounded-3xl bg-primary text-primary-on p-6 sm:p-8">
@@ -370,7 +370,7 @@ export default function HomePage() {
         {/* 11. EMAIL CAPTURE ───────────────────────────────────────────── */}
         <section className="px-5 mt-12" aria-labelledby="email-heading">
           <div className="rounded-3xl bg-secondary-tint border border-secondary/20 p-6 sm:p-8 text-center">
-            <h2 id="email-heading" className="font-serif text-ink tracking-editorial" style={{ fontSize: 24 }}>
+            <h2 id="email-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 24 }}>
               Get safe-product picks weekly
             </h2>
             <p className="mt-2 text-sm text-ink-variant max-w-md mx-auto">

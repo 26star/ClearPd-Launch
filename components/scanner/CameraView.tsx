@@ -60,11 +60,21 @@ export function CameraView({ onBarcode, onText, busy }: CameraViewProps) {
   })()
 
   return (
-    <div className="px-5 space-y-4">
+    <div className="px-5 space-y-3">
       <div
-        className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-ink"
-        style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}
+        className="relative aspect-[2/1] w-full overflow-hidden rounded-3xl bg-surface-container ring-1 ring-outline-variant/30"
       >
+        {/* Soft empty state — visible until the video stream paints over it */}
+        <div className="absolute inset-0 flex items-center justify-center text-ink-variant pointer-events-none">
+          <span
+            className="material-symbols-outlined opacity-50"
+            style={{ fontSize: 32 }}
+            aria-hidden
+          >
+            photo_camera
+          </span>
+        </div>
+
         <video
           ref={videoRef}
           autoPlay
@@ -74,59 +84,50 @@ export function CameraView({ onBarcode, onText, busy }: CameraViewProps) {
         />
 
         {/* Scan reticle overlay */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-x-8 top-1/2 -translate-y-1/2">
-            <div
-              className={[
-                'mx-auto rounded-2xl border-2 transition-all',
-                mode === 'barcode'
-                  ? 'h-32 border-white/80'
-                  : 'h-56 border-white/80',
-              ].join(' ')}
-              style={{ borderStyle: 'dashed' }}
-            />
-          </div>
-        </div>
-
-        {/* Status pill (top) */}
-        <div className="absolute top-4 left-4 right-4 flex justify-center">
-          <div className="bg-black/60 backdrop-blur-md rounded-full px-4 py-1.5 text-white text-xs font-medium">
-            {status}
-          </div>
-        </div>
-
-        {/* Mode toggle (bottom-left) + capture button (center) */}
-        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => setMode(mode === 'barcode' ? 'text' : 'barcode')}
-            className="bg-black/60 backdrop-blur-md text-white rounded-full px-4 py-2 text-xs font-medium flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>
-              {mode === 'barcode' ? 'text_fields' : 'qr_code_scanner'}
-            </span>
-            {mode === 'barcode' ? 'Read text instead' : 'Scan barcode'}
-          </button>
-
-          {mode === 'text' && (
-            <button
-              type="button"
-              onClick={captureAndRead}
-              disabled={tesseract.status === 'recognizing' || busy}
-              className="bg-white text-ink rounded-full w-14 h-14 flex items-center justify-center disabled:opacity-50"
-              aria-label="Capture and read ingredients"
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: 28 }}>
-                radio_button_checked
-              </span>
-            </button>
-          )}
-
-          {mode === 'barcode' && <div className="w-14 h-14" />}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center px-6">
+          <div
+            className={[
+              'w-full rounded-xl border-2 transition-all',
+              mode === 'barcode' ? 'h-16 border-white/80' : 'h-24 border-white/80',
+            ].join(' ')}
+            style={{ borderStyle: 'dashed' }}
+          />
         </div>
       </div>
 
-      <p className="text-center text-xs text-ink-variant">
+      {/* Status line + mode toggle (between frame and capture) */}
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs text-ink-variant truncate">{status}</p>
+        <button
+          type="button"
+          onClick={() => setMode(mode === 'barcode' ? 'text' : 'barcode')}
+          className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-surface-lowest px-3 py-1.5 text-[12px] font-medium text-ink ring-1 ring-outline-variant/40 shadow-card hover:bg-surface-low transition"
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 16 }} aria-hidden>
+            {mode === 'barcode' ? 'text_fields' : 'qr_code_scanner'}
+          </span>
+          {mode === 'barcode' ? 'Read text' : 'Scan barcode'}
+        </button>
+      </div>
+
+      {/* Capture button — only in text/OCR mode */}
+      {mode === 'text' && (
+        <div className="flex justify-center pt-1">
+          <button
+            type="button"
+            onClick={captureAndRead}
+            disabled={tesseract.status === 'recognizing' || busy}
+            className="bg-surface-lowest text-ink rounded-full w-14 h-14 flex items-center justify-center disabled:opacity-50 shadow-card ring-1 ring-outline-variant/40 hover:bg-surface-low transition"
+            aria-label="Capture and read ingredients"
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: 28 }}>
+              radio_button_checked
+            </span>
+          </button>
+        </div>
+      )}
+
+      <p className="text-center text-[11px] text-outline">
         {mode === 'barcode'
           ? 'Auto-detects when barcode is centered'
           : 'Hold steady — tap the button to read'}

@@ -16,12 +16,11 @@ const OPTIONS: { value: Phase; label: string; sublabel: string }[] = [
 export function PhaseToggle({ value, onChange }: PhaseToggleProps) {
   return (
     <div className="px-5">
-      <div className="text-[10px] font-bold uppercase tracking-widest text-outline mb-2">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-outline mb-2">
         Your phase
       </div>
       <div
-        className="grid grid-cols-3 gap-1 rounded-2xl p-1"
-        style={{ background: '#edeeef' }}
+        className="grid grid-cols-3 gap-1 rounded-full bg-surface-container/70 p-1"
         role="radiogroup"
         aria-label="Perioral dermatitis phase"
       >
@@ -35,10 +34,10 @@ export function PhaseToggle({ value, onChange }: PhaseToggleProps) {
               aria-checked={active}
               onClick={() => onChange(opt.value)}
               className={[
-                'rounded-xl py-2.5 px-2 text-xs font-medium transition-colors',
+                'rounded-full py-2 px-2 text-[12px] font-medium tracking-wide transition-colors',
                 active
                   ? 'bg-surface-lowest text-ink shadow-card'
-                  : 'text-ink-variant',
+                  : 'text-ink-variant hover:text-ink',
               ].join(' ')}
             >
               {opt.label}

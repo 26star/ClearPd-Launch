@@ -14,28 +14,45 @@ export function PasteView({ onText, busy }: PasteViewProps) {
 
   return (
     <div className="px-5 space-y-3">
-      <div className="rounded-3xl bg-surface-lowest border border-outline-variant/40 p-1 shadow-card">
+      <div className="rounded-3xl bg-surface-lowest ring-1 ring-outline-variant/30 px-5 sm:px-6 pt-5 sm:pt-6 pb-4">
         <textarea
           value={text}
           onChange={e => setText(e.target.value)}
-          placeholder="Aqua, Glycerin, Niacinamide, Sodium Lauryl Sulfate, Phenoxyethanol&hellip;"
-          rows={8}
-          className="w-full resize-none rounded-3xl bg-transparent p-4 text-sm font-sans leading-relaxed placeholder:text-outline focus:outline-none"
+          placeholder="Paste ingredients or search a product"
+          rows={5}
+          className="w-full resize-none bg-transparent border-0 outline-none text-[18px] sm:text-[20px] tracking-[-0.01em] text-ink placeholder:text-outline-variant placeholder:font-light caret-secondary leading-relaxed"
         />
+
+        <div className="mt-5 flex items-center gap-2 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] text-outline">
+            <span className="material-symbols-outlined" style={{ fontSize: 14 }} aria-hidden>
+              info
+            </span>
+            Commas, semicolons, or bullets all work
+          </span>
+
+          <div className="flex-1" />
+
+          <button
+            type="button"
+            onClick={() => onText(text)}
+            disabled={!ready || busy}
+            className={[
+              'inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-medium tracking-wide transition',
+              ready && !busy
+                ? 'bg-primary text-primary-on hover:opacity-90'
+                : 'bg-surface-container text-outline cursor-not-allowed',
+            ].join(' ')}
+          >
+            {busy ? 'Analyzing…' : 'Analyze Safety'}
+            {!busy && (
+              <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden>
+                arrow_forward
+              </span>
+            )}
+          </button>
+        </div>
       </div>
-
-      <p className="text-xs text-ink-variant px-1">
-        Paste from a website, manufacturer&rsquo;s page, or type it out. Commas, semicolons, and bullets all work.
-      </p>
-
-      <button
-        type="button"
-        onClick={() => onText(text)}
-        disabled={!ready || busy}
-        className="w-full rounded-2xl bg-primary text-primary-on font-medium py-4 disabled:opacity-40 transition-opacity"
-      >
-        {busy ? 'Analyzing…' : 'Analyze Safety'}
-      </button>
     </div>
   )
 }

@@ -37,36 +37,38 @@ export default function ScanPage() {
               arrow_back
             </span>
           </Link>
-          <span className="font-serif italic text-xl tracking-tighter text-ink">
+          <span className="text-lg font-semibold tracking-tight text-ink">
             ClearPD
           </span>
           <div className="w-6" /> {/* spacer for symmetry */}
         </div>
       </header>
 
-      {result ? (
-        <>
-          <VerdictCard result={result} onScanAgain={() => setResult(null)} />
-          <UnknownProductPrompt result={result} />
-        </>
-      ) : (
-        <>
-          <div className="px-5 pt-6 pb-4">
-            <h1
-              className="font-serif text-ink leading-tight tracking-editorial"
-              style={{ fontSize: 32 }}
-            >
-              Is this product safe for{' '}
-              <span className="italic">perioral dermatitis</span>?
-            </h1>
-            <p className="text-sm text-ink-variant mt-2">
-              Scan, photograph, or paste ingredients. Verdicts are based on real
-              community evidence.
-            </p>
-          </div>
-          <ProductScanner onResult={setResult} />
-        </>
-      )}
+      <div className="mx-auto w-full max-w-md">
+        {result ? (
+          <>
+            <VerdictCard result={result} onScanAgain={() => setResult(null)} />
+            <UnknownProductPrompt result={result} />
+          </>
+        ) : (
+          <>
+            <div className="px-5 pt-6 pb-4">
+              <h1
+                className="text-ink font-semibold tracking-tighter leading-tight"
+                style={{ fontSize: 30 }}
+              >
+                Is your product safe for perioral dermatitis?
+              </h1>
+              <p className="text-sm text-ink-variant mt-2 leading-relaxed">
+                Paste any ingredient list — skincare, toothpaste, makeup.
+                Instantly flag the 40+ ingredients known to trigger PD flares.
+                Free, no signup.
+              </p>
+            </div>
+            <ProductScanner onResult={setResult} />
+          </>
+        )}
+      </div>
     </main>
   )
 }

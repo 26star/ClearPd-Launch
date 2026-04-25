@@ -16,9 +16,9 @@ const TABS: { value: ScanMode; icon: string; label: string }[] = [
 export function ModeTabs({ value, onChange }: ModeTabsProps) {
   return (
     <div
-      className="flex gap-1 rounded-2xl p-1 mx-5"
-      style={{ background: '#edeeef' }}
+      className="flex gap-1 rounded-full bg-surface-container/70 p-1 mx-5"
       role="tablist"
+      aria-label="Scan mode"
     >
       {TABS.map(t => {
         const active = value === t.value
@@ -29,13 +29,13 @@ export function ModeTabs({ value, onChange }: ModeTabsProps) {
             aria-selected={active}
             onClick={() => onChange(t.value)}
             className={[
-              'flex-1 flex items-center justify-center gap-2 rounded-xl py-3 text-xs font-medium transition-colors',
+              'flex-1 flex items-center justify-center gap-1.5 rounded-full py-2.5 text-[12px] font-medium tracking-wide transition-colors',
               active
                 ? 'bg-surface-lowest text-ink shadow-card'
-                : 'text-ink-variant',
+                : 'text-ink-variant hover:text-ink',
             ].join(' ')}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 17 }} aria-hidden>
               {t.icon}
             </span>
             {t.label}
