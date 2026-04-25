@@ -39,7 +39,7 @@ export function HeroScanner() {
 
   return (
     <div className="text-left">
-      <ProductScanner onResult={setResult} />
+      <ProductScanner onResult={setResult} hidePhase />
     </div>
   )
 }

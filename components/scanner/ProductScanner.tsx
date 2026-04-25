@@ -10,9 +10,11 @@ import { PasteView } from './PasteView'
 
 interface ProductScannerProps {
   onResult: (result: ScanResponse) => void
+  /** When true, hide the phase toggle (phase stays 'any'). Used in the homepage hero. */
+  hidePhase?: boolean
 }
 
-export function ProductScanner({ onResult }: ProductScannerProps) {
+export function ProductScanner({ onResult, hidePhase = false }: ProductScannerProps) {
   const [mode, setMode] = useState<ScanMode>('camera')
   const [phase, setPhase] = useState<Phase>('any')
   const [busy, setBusy] = useState(false)
@@ -48,7 +50,7 @@ export function ProductScanner({ onResult }: ProductScannerProps) {
 
   return (
     <div className="space-y-5 pb-8">
-      <PhaseToggle value={phase} onChange={setPhase} />
+      {!hidePhase && <PhaseToggle value={phase} onChange={setPhase} />}
       <ModeTabs value={mode} onChange={setMode} />
 
       {mode === 'camera' && (
