@@ -342,50 +342,6 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* 11. EMAIL CAPTURE ───────────────────────────────────────────── */}
-        <section
-          className="scroll-mt-20 px-5 mt-16 max-w-2xl mx-auto"
-          aria-labelledby="email-heading"
-        >
-          <div className="h-px w-12 bg-ink/30" aria-hidden />
-          <div className="mt-6 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-variant">
-            Newsletter
-          </div>
-          <h2
-            id="email-heading"
-            className="mt-3 text-ink font-semibold tracking-tight"
-            style={{ fontSize: 24 }}
-          >
-            The PD Recovery Newsletter
-          </h2>
-          <p className="mt-3 text-[14px] text-ink-variant leading-relaxed max-w-md">
-            Get the safe-product picks, ingredient deep-dives, and recovery protocols
-            every Sunday. Written by someone with PD, for people with PD. One email,
-            no spam, unsubscribe in one click.
-          </p>
-          <form
-            className="mt-5 flex flex-col sm:flex-row gap-2 max-w-md"
-            action="/api/subscribe"
-            method="post"
-          >
-            <label htmlFor="email" className="sr-only">Email address</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="you@example.com"
-              className="flex-1 rounded-full bg-surface-lowest border border-outline-variant/50 px-4 min-h-[44px] text-sm text-ink placeholder:text-outline focus:outline-none focus:border-secondary"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-primary text-primary-on px-5 min-h-[44px] text-sm font-medium hover:opacity-90 transition"
-            >
-              Subscribe
-            </button>
-          </form>
-        </section>
-
         {/* FOOTER ──────────────────────────────────────────────────────── */}
         <footer className="px-5 mt-16 pb-6 text-center text-xs text-ink-variant max-w-2xl mx-auto">
           <p>
