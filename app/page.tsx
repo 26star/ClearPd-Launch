@@ -80,8 +80,6 @@ const FAQS: { q: string; a: string }[] = [
     a: 'ClearPD parses your product’s INCI list and matches each ingredient against a database of known PD triggers, alternatives, and safe ingredients. Each flagged ingredient is weighted by its position on the INCI list — ingredients at higher concentrations (positions 1–5) score more heavily than trace ingredients (position 20+). The result is a PODSI score from 0–100 with a tiered verdict: Safe (A+/A), Caution (B/C), or Avoid (D/F). The database is built from peer-reviewed dermatology literature, real PD sufferer experiences, and consensus from PD specialists. Every flagged ingredient links to its evidence and alternatives.' },
   { q: 'Is ClearPD a substitute for a dermatologist?',
     a: 'No. ClearPD helps you eliminate ingredient triggers — a key part of recovery — but is not medical advice. If your rash is severe, spreading, or persistent for more than 4 weeks, see a board-certified dermatologist.' },
-  { q: 'What’s the difference between ClearPD and other ingredient checkers?',
-    a: 'Most ingredient checkers either flag every irritant generically or rely on AI-generated guesses. ClearPD is built specifically for perioral dermatitis, with a database curated from PD-specific clinical research and triggers documented by real PD sufferers. The PODSI score weights ingredients by their position on the INCI list, reflecting actual concentration. Built by a PD sufferer, free forever, no signup required.' },
 ]
 
 // ─── JSON-LD structured data ────────────────────────────────────────────────
@@ -352,18 +350,8 @@ export default function HomePage() {
           <p className="mt-6 text-[17px] leading-[1.7] text-ink">
             ClearPD is a free ingredient and product safety checker built specifically
             for people with perioral dermatitis. Paste a label, upload a photo, or scan
-            a barcode &mdash; every ingredient is matched against ClearPD&rsquo;s
-            curated database of known PD triggers, weighted by INCI position, and
-            returned with a tiered PODSI verdict: Safe (A+/A), Caution (B/C), or
-            Avoid (D/F).
+            a barcode &mdash; every ingredient is matched against known PD triggers.
           </p>
-          <p className="mt-5 text-[15px] leading-[1.7] text-ink-variant">
-            Built by a PD sufferer in Glasgow, UK, drawing on peer-reviewed dermatology
-            literature, real PD sufferer experiences, and dermatology consensus on PD
-            triggers. Not a substitute for a dermatologist &mdash; for severe or
-            persistent symptoms, please see a board-certified specialist.
-          </p>
-          <p className="mt-8 text-[12px] text-outline">Last updated: April 2026.</p>
         </section>
 
         {/* 11. EMAIL CAPTURE ───────────────────────────────────────────── */}
@@ -413,14 +401,7 @@ export default function HomePage() {
         {/* FOOTER ──────────────────────────────────────────────────────── */}
         <footer className="px-5 mt-16 pb-6 text-center text-xs text-ink-variant max-w-2xl mx-auto">
           <p>
-            ClearPD provides ingredient analysis for educational purposes only. Not
-            medical advice. See a board-certified dermatologist for severe or
-            persistent symptoms. Sources: peer-reviewed dermatology literature, real
-            PD sufferer experiences, dermatology consensus protocols.
-          </p>
-          <p className="mt-3">
-            Last updated: April 2026 &middot; &copy; {new Date().getFullYear()} ClearPD &middot;
-            Built by a PD sufferer in Glasgow, UK
+            Last updated: April 2026 &middot; &copy; {new Date().getFullYear()} ClearPD
           </p>
         </footer>
       </div>
