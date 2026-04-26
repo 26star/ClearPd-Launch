@@ -2,11 +2,11 @@
 
 import { useRef, useState } from 'react'
 import { useBarcode } from '@/lib/scanner/useBarcode'
-import { useTesseract } from '@/lib/scanner/useTesseract'
+import { isOCRError, useTesseract } from '@/lib/scanner/useTesseract'
 
 interface CameraViewProps {
   onBarcode: (barcode: string) => void
-  onText: (rawText: string) => void
+  onText: (rawText: string, ocrConfidence?: number) => void
   busy: boolean
 }
 
@@ -38,8 +38,8 @@ export function CameraView({ onBarcode, onText, busy }: CameraViewProps) {
       async blob => {
         if (!blob) return
         const result = await tesseract.recognize(blob)
-        if (result && result.text.trim().length > 5) {
-          onText(result.text)
+        if (!isOCRError(result) && result.text.trim().length > 5) {
+          onText(result.text, result.confidence)
         }
       },
       'image/jpeg',

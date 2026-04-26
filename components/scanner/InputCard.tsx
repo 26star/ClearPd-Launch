@@ -2,20 +2,34 @@
 
 import { useRef, useState } from 'react'
 import { BrowserMultiFormatReader } from '@zxing/browser'
-import { useTesseract } from '@/lib/scanner/useTesseract'
+import { DecodeHintType, BarcodeFormat } from '@zxing/library'
+import { isOCRError, useTesseract } from '@/lib/scanner/useTesseract'
 
 interface InputCardProps {
   onPaste: (rawText: string) => void
   onBarcode: (barcode: string) => void
-  onText: (rawText: string) => void
+  onText: (rawText: string, ocrConfidence?: number) => void
   onScanCamera: () => void
   busy: boolean
 }
+
+// Restrict upload barcode decoding to retail formats — same as the live
+// camera path. Prevents QR codes printed on packaging from being falsely
+// decoded as a "barcode" and sent downstream.
+const UPLOAD_HINTS = new Map<DecodeHintType, BarcodeFormat[]>()
+UPLOAD_HINTS.set(DecodeHintType.POSSIBLE_FORMATS, [
+  BarcodeFormat.EAN_13,
+  BarcodeFormat.EAN_8,
+  BarcodeFormat.UPC_A,
+  BarcodeFormat.UPC_E,
+  BarcodeFormat.CODE_128,
+])
 
 export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: InputCardProps) {
   const [text, setText] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploadPhase, setUploadPhase] = useState<'idle' | 'barcode' | 'ocr'>('idle')
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const tesseract = useTesseract()
 
   const ready = text.trim().length >= 5
@@ -23,9 +37,20 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
   const disabled = busy || uploading
 
   const handleFile = async (file: File) => {
+    setUploadError(null)
+
+    // File-type guard. accept="image/*" is only a browser hint; users can
+    // bypass it on most OSes. Empty file.type is allowed (some browsers
+    // leave it blank for HEIC etc.) — we only reject when the type is
+    // present AND clearly non-image.
+    if (file.type && !file.type.startsWith('image/')) {
+      setUploadError('Please choose an image file (JPG, PNG, HEIC).')
+      return
+    }
+
     setUploadPhase('barcode')
     try {
-      const reader = new BrowserMultiFormatReader()
+      const reader = new BrowserMultiFormatReader(UPLOAD_HINTS)
       const url = URL.createObjectURL(file)
       const result = await reader.decodeFromImageUrl(url).catch(() => null)
       URL.revokeObjectURL(url)
@@ -37,12 +62,22 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
     } catch {
       // fall through to OCR
     }
+
     setUploadPhase('ocr')
-    const ocrResult = await tesseract.recognize(file)
-    if (ocrResult && ocrResult.text.trim().length > 5) {
-      onText(ocrResult.text)
-    }
+    const ocr = await tesseract.recognize(file)
     setUploadPhase('idle')
+
+    if (isOCRError(ocr)) {
+      setUploadError(`Couldn't read this image: ${ocr.error}`)
+      return
+    }
+    if (ocr.text.trim().length <= 5) {
+      setUploadError(
+        "Couldn't read text from this image — try a clearer, well-lit photo of just the ingredient list, or paste the ingredients manually.",
+      )
+      return
+    }
+    onText(ocr.text, ocr.confidence)
   }
 
   const uploadLabel =
@@ -63,6 +98,8 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
           onChange={e => {
             const f = e.target.files?.[0]
             if (f) handleFile(f)
+            // Reset value so picking the same file twice in a row still fires onChange
+            e.target.value = ''
           }}
         />
 
@@ -79,7 +116,7 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={disabled}
-            className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium text-ink ring-1 ring-outline-variant/50 hover:bg-surface-low disabled:opacity-50 transition"
+            className="inline-flex items-center gap-1.5 rounded-full px-3.5 min-h-[44px] text-[13px] font-medium text-ink ring-1 ring-outline-variant/50 hover:bg-surface-low disabled:opacity-50 transition"
           >
             <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden>
               image
@@ -91,7 +128,7 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
             type="button"
             onClick={onScanCamera}
             disabled={disabled}
-            className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-medium text-ink ring-1 ring-outline-variant/50 hover:bg-surface-low disabled:opacity-50 transition"
+            className="inline-flex items-center gap-1.5 rounded-full px-3.5 min-h-[44px] text-[13px] font-medium text-ink ring-1 ring-outline-variant/50 hover:bg-surface-low disabled:opacity-50 transition"
           >
             <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden>
               qr_code_scanner
@@ -106,7 +143,7 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
             onClick={() => onPaste(text)}
             disabled={!ready || disabled}
             className={[
-              'inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] font-medium transition',
+              'inline-flex items-center gap-1.5 rounded-full px-4 min-h-[44px] text-[13px] font-medium transition',
               ready && !disabled
                 ? 'bg-primary text-primary-on hover:opacity-90'
                 : 'bg-surface-container text-outline cursor-not-allowed',
@@ -121,6 +158,18 @@ export function InputCard({ onPaste, onBarcode, onText, onScanCamera, busy }: In
           </button>
         </div>
       </div>
+
+      {uploadError && (
+        <div
+          role="alert"
+          className="mt-3 flex items-start gap-2 rounded-2xl bg-tertiary/10 border border-tertiary/20 px-4 py-3 text-[13px] text-tertiary"
+        >
+          <span className="material-symbols-outlined shrink-0 mt-0.5" style={{ fontSize: 16 }} aria-hidden>
+            error
+          </span>
+          <span className="leading-snug">{uploadError}</span>
+        </div>
+      )}
     </div>
   )
 }

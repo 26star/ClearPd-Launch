@@ -1,23 +1,28 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Phase, ScanResponse } from '@/lib/scanner/types'
 import { InputCard } from './InputCard'
 import { CameraView } from './CameraView'
+import { PhaseToggle } from './PhaseToggle'
 
 interface ProductScannerProps {
-  onResult: (result: ScanResponse) => void
+  // Hidden on the homepage hero (low-friction first-touch); on /scan the user
+  // is deliberately scanning and benefits from phase-aware verdicts.
+  showPhase?: boolean
 }
 
 type Mode = 'input' | 'camera'
 
-export function ProductScanner({ onResult }: ProductScannerProps) {
+export function ProductScanner({ showPhase = true }: ProductScannerProps) {
+  const router = useRouter()
   const [mode, setMode] = useState<Mode>('input')
-  const phase: Phase = 'any'
+  const [phase, setPhase] = useState<Phase>('any')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function postScan(endpoint: string, body: unknown) {
+  async function postScan(endpoint: string, body: unknown, ocrConfidence?: number) {
     setBusy(true)
     setError(null)
     try {
@@ -28,10 +33,16 @@ export function ProductScanner({ onResult }: ProductScannerProps) {
       })
       if (!r.ok) throw new Error(`Server returned ${r.status}`)
       const data: ScanResponse = await r.json()
-      onResult(data)
+      // Surface low OCR confidence to the result page so we can warn the user.
+      // Skip the param when confidence is fine — keeps URLs clean for the 95% case.
+      const lowConf =
+        ocrConfidence !== undefined && ocrConfidence < 70
+          ? `?conf=${Math.round(ocrConfidence)}`
+          : ''
+      // Navigate to the result page. Don't clear `busy` — the page is unmounting.
+      router.push(`/result/${data.scan_event_id}${lowConf}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Scan failed')
-    } finally {
       setBusy(false)
     }
   }
@@ -41,9 +52,9 @@ export function ProductScanner({ onResult }: ProductScannerProps) {
     return postScan('/api/scan/barcode', { barcode, phase })
   }
 
-  const handleText = (raw_text: string) => {
+  const handleText = (raw_text: string, ocrConfidence?: number) => {
     setMode('input')
-    return postScan('/api/scan/ocr', { raw_text, phase })
+    return postScan('/api/scan/ocr', { raw_text, phase }, ocrConfidence)
   }
 
   const handlePaste = (raw_text: string) =>
@@ -51,6 +62,8 @@ export function ProductScanner({ onResult }: ProductScannerProps) {
 
   return (
     <div className="space-y-3 pb-8">
+      {showPhase && <PhaseToggle value={phase} onChange={setPhase} />}
+
       {mode === 'input' && (
         <InputCard
           onPaste={handlePaste}

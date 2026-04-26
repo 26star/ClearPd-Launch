@@ -24,7 +24,6 @@ export const metadata: Metadata = {
     "perioral dermatitis",
     "PD safe skincare",
     "perioral dermatitis ingredient checker",
-    "PODSI",
     "fluoride toothpaste perioral dermatitis",
     "SLS perioral dermatitis",
   ],

@@ -68,8 +68,7 @@ GUIDE/
 
 # playwright MCP cache + screenshots dropped at repo root
 .playwright-mcp/
-/home-*.png
-/scan-*.png
+/*.png
 
 # orphan draft files (working scratchpads, not source)
 *.clean

@@ -13,7 +13,12 @@ import { MatchedIngredient } from './types'
  * (39 ingredients are matched well by trigram + aliases alone).
  */
 
-const TRIGRAM_THRESHOLD = 0.7
+// Trigram threshold tuned from 0.7 → 0.55 to catch the README's flagship
+// OCR typo case ("Sodiurn Laureth Sulf" → "Sodium Laureth Sulfate", sim ≈ 0.61).
+// 0.55 is still well above noise (random tokens cluster <0.3) and the cascade
+// is conservative — a wrong fuzzy hit just becomes a slightly miscoloured pill,
+// not a wrong verdict (which is dominated by the trigger/helpful counts).
+const TRIGRAM_THRESHOLD = 0.55
 const EMBEDDING_THRESHOLD = 0.85
 
 interface MatchOptions {

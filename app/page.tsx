@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { HeroScanner } from '@/components/home/HeroScanner'
+import { VerdictPill } from '@/components/content/VerdictPill'
 
 // ─── Content data ────────────────────────────────────────────────────────────
 
@@ -70,8 +71,8 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Yes. Pediatric perioral dermatitis is well-documented and often linked to inhaled steroids (asthma inhalers), topical steroids on eczema, or fluoride toothpaste. Treatment mirrors adult care but uses pediatric-safe antibiotics like erythromycin.' },
   { q: 'Does diet affect perioral dermatitis?',
     a: 'Evidence is limited. Some patients report improvement after cutting cinnamon, dairy, or sugar, but this is anecdotal. Diet is unlikely to be the primary trigger \u2014 focus on topical products first, then experiment with diet if needed.' },
-  { q: 'How does the PODSI Checker decide if a product is safe?',
-    a: 'PODSI parses the ingredient list, matches each ingredient against our trigger database, and returns a tiered verdict (Safe / Caution / Avoid). The database is built from peer-reviewed literature plus thousands of self-reported community observations. Every flagged ingredient links to its evidence.' },
+  { q: 'How does ClearPD decide if a product is safe?',
+    a: 'ClearPD parses the ingredient list, matches each ingredient against our trigger database, and returns a tiered verdict (Safe / Caution / Avoid). The database is built from peer-reviewed literature plus thousands of self-reported community observations. Every flagged ingredient links to its evidence.' },
   { q: 'Is ClearPD a substitute for a dermatologist?',
     a: 'No. ClearPD helps you eliminate ingredient triggers \u2014 a key part of recovery \u2014 but is not medical advice. If your rash is severe, spreading, or persistent for more than 4 weeks, see a board-certified dermatologist.' },
 ]
@@ -90,16 +91,6 @@ const organizationSchema = {
   description:
     'ClearPD helps people with perioral dermatitis identify trigger ingredients in skincare, toothpaste, and cosmetics through community-evidenced ingredient analysis.',
   sameAs: [],
-}
-
-const personSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  '@id': `${SITE_URL}#founder`,
-  name: 'Pema Wang',
-  jobTitle: 'Founder, ClearPD',
-  worksFor: { '@id': `${SITE_URL}#organization` },
-  url: SITE_URL,
 }
 
 const websiteSchema = {
@@ -121,20 +112,6 @@ const faqSchema = {
   })),
 }
 
-// ─── Verdict tone helpers (use design tokens, not raw hex) ──────────────────
-
-function verdictClasses(tone: 'safe' | 'caution' | 'tertiary') {
-  switch (tone) {
-    case 'safe':
-      return 'bg-safe-bg text-safe border-safe/20'
-    case 'caution':
-      // "Caution" uses tertiary at lower intensity per palette spec
-      return 'bg-tertiary-tint text-tertiary border-tertiary/20'
-    case 'tertiary':
-      return 'bg-tertiary-tint text-tertiary border-tertiary/30'
-  }
-}
-
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
@@ -143,18 +120,15 @@ export default function HomePage() {
       {/* TOP BAR ─────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-20 bg-bg/80 backdrop-blur-md border-b border-outline-variant/30">
         <div className="flex items-center justify-between px-6 py-4 safe-pt max-w-6xl mx-auto">
-          <Link href="/" className="text-xl font-semibold tracking-tight text-ink">
+          <Link href="/" className="inline-flex items-center min-h-[44px] text-xl font-semibold tracking-tight text-ink">
             ClearPD
           </Link>
-          <nav className="flex items-center gap-6 text-sm">
-            <a href="#faq" className="text-ink-variant hover:text-ink transition">Safety Guide</a>
-          </nav>
         </div>
       </header>
 
-      {/* 1 + 2 + 3. HERO + DIRECT ANSWER + PODSI CHECKER ─────────────── */}
+      {/* 1 + 2 + 3. HERO + DIRECT ANSWER + CHECKER ─────────────────────── */}
       <section
-        id="podsi-checker"
+        id="checker"
         className="hero-wash scroll-mt-20"
         aria-labelledby="hero-heading"
       >
@@ -183,7 +157,7 @@ export default function HomePage() {
             <strong className="font-semibold text-ink">Is your skincare safe for perioral dermatitis?</strong>{' '}
             Often, no. PD is triggered by common ingredients&mdash;fluoride, SLS,
             fragrance, cinnamates, heavy occlusives, and topical steroids. The
-            PODSI Checker above scans any product&rsquo;s ingredient list and
+            checker above scans any product&rsquo;s ingredient list and
             returns a tiered verdict&mdash;Safe, Caution, or Avoid&mdash;based on
             community evidence from thousands of PD sufferers. Paste a label,
             upload a photo, or scan a barcode to get an answer in seconds.
@@ -247,16 +221,11 @@ export default function HomePage() {
               <Link
                 key={c.slug}
                 href={`/check/${c.slug}`}
-                className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 p-4 hover:border-secondary/50 hover:shadow-card transition"
+                className="rounded-2xl bg-surface-lowest border border-outline-variant/40 p-4 hover:border-secondary/50 hover:shadow-card transition"
               >
-                <div className="flex items-start justify-between">
-                  <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 18 }}>
-                    {c.title}
-                  </h3>
-                  <span className="material-symbols-outlined text-outline group-hover:text-secondary transition" style={{ fontSize: 18 }}>
-                    arrow_forward
-                  </span>
-                </div>
+                <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 18 }}>
+                  {c.title}
+                </h3>
                 <p className="mt-2 text-[13px] text-ink-variant leading-snug">{c.blurb}</p>
               </Link>
             ))}
@@ -282,9 +251,7 @@ export default function HomePage() {
                   <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 17 }}>
                     {i.name}
                   </h3>
-                  <span className={`shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider ${verdictClasses(i.tone)}`}>
-                    {i.verdict}
-                  </span>
+                  <VerdictPill tone={i.tone} verdict={i.verdict} />
                 </div>
                 <p className="mt-2 text-[13px] text-ink-variant leading-snug">{i.answer}</p>
               </Link>
@@ -311,9 +278,7 @@ export default function HomePage() {
                   <h3 className="text-ink font-bold tracking-tight" style={{ fontSize: 17 }}>
                     {p.name}
                   </h3>
-                  <span className={`shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider ${verdictClasses(p.tone)}`}>
-                    {p.verdict}
-                  </span>
+                  <VerdictPill tone={p.tone} verdict={p.verdict} />
                 </div>
                 <p className="mt-2 text-[13px] text-ink-variant leading-snug">{p.line}</p>
               </Link>
@@ -347,58 +312,72 @@ export default function HomePage() {
         </section>
 
         {/* 10. ABOUT ───────────────────────────────────────────────────── */}
-        <section id="about" className="scroll-mt-20 px-5 mt-12" aria-labelledby="about-heading">
-          <h2 id="about-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
+        <section
+          id="about"
+          className="scroll-mt-20 px-5 mt-16 max-w-2xl mx-auto"
+          aria-labelledby="about-heading"
+        >
+          <div className="h-px w-12 bg-ink/30" aria-hidden />
+          <h2
+            id="about-heading"
+            className="mt-6 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-variant"
+          >
             About ClearPD
           </h2>
-          <div className="mt-4 rounded-3xl bg-primary text-primary-on p-6 sm:p-8">
-            <p className="text-[15px] leading-relaxed">
-              ClearPD started after months of trial-and-error trying to clear
-              perioral dermatitis. Every &ldquo;clean&rdquo; product seemed to flare
-              the rash, and dermatology appointments came back with the same
-              advice: stop everything. The problem wasn&rsquo;t the advice&mdash;
-              it was figuring out which ingredient in which product was the
-              culprit. So we built a checker.
-            </p>
-            <p className="mt-3 text-[15px] leading-relaxed text-primary-on/80">
-              Founded by Pema Wang. Built on community evidence from thousands
-              of PD sufferers. Not a substitute for a dermatologist.
-            </p>
-          </div>
+          <p className="mt-6 text-[17px] leading-[1.7] text-ink">
+            ClearPD is an ingredient and product safety checker for people with
+            perioral dermatitis. Paste a label, upload a photo, or scan a
+            barcode &mdash; every ingredient is matched against a database of
+            known PD triggers, and the product gets a tiered verdict: Safe,
+            Caution, or Avoid.
+          </p>
+          <p className="mt-8 text-[12px] text-outline leading-relaxed max-w-md">
+            Built on community evidence from thousands of PD sufferers. Not a
+            substitute for a dermatologist.
+          </p>
         </section>
 
         {/* 11. EMAIL CAPTURE ───────────────────────────────────────────── */}
-        <section className="px-5 mt-12" aria-labelledby="email-heading">
-          <div className="rounded-3xl bg-secondary-tint border border-secondary/20 p-6 sm:p-8 text-center">
-            <h2 id="email-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 24 }}>
-              Get safe-product picks weekly
-            </h2>
-            <p className="mt-2 text-sm text-ink-variant max-w-md mx-auto">
-              One short email, every Sunday. New verdicts, ingredient deep-dives,
-              and recovery protocols. Unsubscribe in one click.
-            </p>
-            <form
-              className="mt-5 flex flex-col sm:flex-row gap-2 max-w-md mx-auto"
-              action="/api/subscribe"
-              method="post"
-            >
-              <label htmlFor="email" className="sr-only">Email address</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="you@example.com"
-                className="flex-1 rounded-full bg-surface-lowest border border-outline-variant px-4 py-3 text-sm text-ink placeholder:text-outline focus:outline-none focus:border-secondary"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-primary text-primary-on px-5 py-3 text-sm font-medium hover:opacity-90 transition"
-              >
-                Subscribe
-              </button>
-            </form>
+        <section
+          className="scroll-mt-20 px-5 mt-16 max-w-2xl mx-auto"
+          aria-labelledby="email-heading"
+        >
+          <div className="h-px w-12 bg-ink/30" aria-hidden />
+          <div className="mt-6 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-variant">
+            Weekly digest
           </div>
+          <h2
+            id="email-heading"
+            className="mt-3 text-ink font-semibold tracking-tight"
+            style={{ fontSize: 24 }}
+          >
+            Get safe-product picks weekly
+          </h2>
+          <p className="mt-3 text-[14px] text-ink-variant leading-relaxed max-w-md">
+            One short email, every Sunday. New verdicts, ingredient deep-dives,
+            and recovery protocols. Unsubscribe in one click.
+          </p>
+          <form
+            className="mt-5 flex flex-col sm:flex-row gap-2 max-w-md"
+            action="/api/subscribe"
+            method="post"
+          >
+            <label htmlFor="email" className="sr-only">Email address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              className="flex-1 rounded-full bg-surface-lowest border border-outline-variant/50 px-4 min-h-[44px] text-sm text-ink placeholder:text-outline focus:outline-none focus:border-secondary"
+            />
+            <button
+              type="submit"
+              className="rounded-full bg-primary text-primary-on px-5 min-h-[44px] text-sm font-medium hover:opacity-90 transition"
+            >
+              Subscribe
+            </button>
+          </form>
         </section>
 
         {/* FOOTER ──────────────────────────────────────────────────────── */}
@@ -416,10 +395,6 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
       <script
         type="application/ld+json"
