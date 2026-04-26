@@ -5,20 +5,15 @@ import { useRouter } from 'next/navigation'
 import { Phase, ScanResponse } from '@/lib/scanner/types'
 import { InputCard } from './InputCard'
 import { CameraView } from './CameraView'
-import { PhaseToggle } from './PhaseToggle'
-
-interface ProductScannerProps {
-  // Hidden on the homepage hero (low-friction first-touch); on /scan the user
-  // is deliberately scanning and benefits from phase-aware verdicts.
-  showPhase?: boolean
-}
 
 type Mode = 'input' | 'camera'
 
-export function ProductScanner({ showPhase = true }: ProductScannerProps) {
+export function ProductScanner() {
   const router = useRouter()
   const [mode, setMode] = useState<Mode>('input')
-  const [phase, setPhase] = useState<Phase>('any')
+  // Default phase. The phase-aware materialized views still exist server-side
+  // so phase-specific scoring can be reintroduced later via a different UI.
+  const phase: Phase = 'any'
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -62,8 +57,6 @@ export function ProductScanner({ showPhase = true }: ProductScannerProps) {
 
   return (
     <div className="space-y-3 pb-8">
-      {showPhase && <PhaseToggle value={phase} onChange={setPhase} />}
-
       {mode === 'input' && (
         <InputCard
           onPaste={handlePaste}

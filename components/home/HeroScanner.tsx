@@ -3,8 +3,7 @@
 import dynamic from 'next/dynamic'
 
 /**
- * Homepage scanner wrapper. Lazy-loads ProductScanner with PhaseToggle
- * suppressed for the low-friction first-touch surface. Result rendering
+ * Homepage scanner wrapper. Lazy-loads ProductScanner. Result rendering
  * happens on /result/[scanId] — this component owns no result state.
  */
 const ProductScanner = dynamic(
@@ -23,7 +22,7 @@ const ProductScanner = dynamic(
 export function HeroScanner() {
   return (
     <div className="rounded-[32px] bg-surface-lowest shadow-elevated pt-6 pb-2">
-      <ProductScanner showPhase={false} />
+      <ProductScanner />
     </div>
   )
 }

@@ -161,7 +161,7 @@ export function ResultView({
             ClearPD
           </Link>
           <nav className="flex items-center gap-6 text-sm">
-            <Link href="/scan" className="text-ink-variant hover:text-ink transition">
+            <Link href="/#checker" className="text-ink-variant hover:text-ink transition">
               Scan another
             </Link>
             <Link href="/#faq" className="text-ink-variant hover:text-ink transition">
@@ -356,7 +356,7 @@ export function ResultView({
             {scan.phase === 'any' && ' Scan again with Active or Maintenance to see phase-specific results.'}
           </div>
           <Link
-            href="/scan"
+            href="/#checker"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary text-primary-on px-5 min-h-[44px] text-sm font-medium hover:opacity-90 transition"
           >
             <span className="material-symbols-outlined" style={{ fontSize: 18 }} aria-hidden>
