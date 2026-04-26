@@ -161,19 +161,6 @@ export default function HomePage() {
           <p className="mt-6 text-[12px] text-ink-variant tracking-wide max-w-2xl mx-auto">
             Free forever &middot; No signup &middot; No tracking &middot; No dark patterns
           </p>
-
-          {/* AEO direct-answer paragraph */}
-          <p className="mt-8 text-[14px] text-ink-variant leading-relaxed max-w-2xl mx-auto">
-            Many common skincare and toothpaste ingredients trigger perioral dermatitis.
-            Documented culprits include sodium lauryl sulfate (SLS), fluoride, fragrance,
-            cinnamic aldehyde, heavy occlusives, and topical steroids. The checker above
-            scans any product&rsquo;s ingredient list and returns a tiered verdict
-            &mdash; Safe, Caution, or Avoid &mdash; using ClearPD&rsquo;s position-weighted
-            ingredient analysis, which weights each flagged ingredient by its position on
-            the INCI list. Paste a label, upload a photo, or scan a barcode to get an answer in
-            seconds. Database built from peer-reviewed literature, dermatology consensus,
-            and real PD sufferer evidence.
-          </p>
         </div>
       </section>
 
@@ -181,25 +168,6 @@ export default function HomePage() {
 
         {/* 4 + 5. EXPANDABLE Q&A ───────────────────────────────────────── */}
         <section className="px-5 mt-10 space-y-3" aria-label="About perioral dermatitis">
-          <details className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
-            <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h2 className="text-ink font-bold tracking-tight" style={{ fontSize: 22 }}>
-                How does the ClearPD ingredient checker work?
-              </h2>
-              <span className="material-symbols-outlined text-ink-variant transition-transform group-open:rotate-180" style={{ fontSize: 24 }}>
-                expand_more
-              </span>
-            </summary>
-            <p className="mt-3 text-[15px] text-ink-variant leading-relaxed">
-              ClearPD parses your product&rsquo;s ingredient list and matches each ingredient
-              against a database of known PD triggers. Every flagged ingredient is weighted
-              by its position on the INCI list &mdash; ingredients in positions 1&ndash;5
-              (highest concentration) score more heavily than trace ingredients in position
-              20+. The result is a Safe / Caution / Avoid verdict. Paste a label, upload
-              a photo, or scan a barcode.
-            </p>
-          </details>
-
           <details className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between cursor-pointer list-none">
               <h2 className="text-ink font-bold tracking-tight" style={{ fontSize: 22 }}>
@@ -303,6 +271,28 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </section>
+
+        {/* 8b. HOW CLEARPD WORKS — methodology prose ───────────────────── */}
+        <section className="px-5 mt-12" aria-labelledby="how-it-works-heading">
+          <h2
+            id="how-it-works-heading"
+            className="text-ink font-bold tracking-tight"
+            style={{ fontSize: 26 }}
+          >
+            How ClearPD works
+          </h2>
+          <p className="mt-3 text-[15px] text-ink-variant leading-relaxed">
+            Many common skincare and toothpaste ingredients trigger perioral dermatitis.
+            Documented culprits include sodium lauryl sulfate (SLS), fluoride, fragrance,
+            cinnamic aldehyde, heavy occlusives, and topical steroids. The ClearPD checker
+            scans any product&rsquo;s ingredient list and returns a tiered verdict
+            &mdash; Safe, Caution, or Avoid &mdash; using ClearPD&rsquo;s position-weighted
+            ingredient analysis, which weights each flagged ingredient by its position on
+            the INCI list. Paste a label, upload a photo, or scan a barcode to get an
+            answer in seconds. Database built from peer-reviewed literature, dermatology
+            consensus, and real PD sufferer evidence.
+          </p>
         </section>
 
         {/* 9. FAQ ──────────────────────────────────────────────────────── */}
