@@ -217,8 +217,7 @@ export function ResultView({
           </p>
           {verdict && verdict.coverage.total > 0 && (
             <p className="mt-3 text-[13px] opacity-80">
-              Recognised {verdict.coverage.matched} of {verdict.coverage.total} ingredients
-              {verdict.coverage.percentage < 0.5 ? ' — verdict may be incomplete' : ''}.
+              Recognised {verdict.coverage.matched} of {verdict.coverage.total} ingredients.
             </p>
           )}
         </section>
@@ -335,11 +334,8 @@ export function ResultView({
         {unknownStrings.length > 0 && (
           <section className="mt-10">
             <h2 className="text-ink font-bold tracking-tight" style={{ fontSize: 18 }}>
-              Not yet in our database ({unknownStrings.length})
+              Unrecognized ingredients ({unknownStrings.length})
             </h2>
-            <p className="mt-1 text-[13px] text-ink-variant">
-              We logged these for curation. They didn&rsquo;t match anything in our PD vocabulary.
-            </p>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {unknownStrings.map((s) => (
                 <span

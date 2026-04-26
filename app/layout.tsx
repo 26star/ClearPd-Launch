@@ -19,12 +19,11 @@ export const metadata: Metadata = {
     template: "%s · ClearPD",
   },
   description:
-    "Check if your skincare, toothpaste, or makeup is safe for perioral dermatitis (PD). Free position-weighted PODSI analysis of 40+ known triggers. No signup.",
+    "Check if your skincare, toothpaste, or makeup is safe for perioral dermatitis (PD). Free position-weighted ingredient analysis of 40+ known triggers. No signup.",
   keywords: [
     "perioral dermatitis",
     "perioral dermatitis ingredient checker",
     "PD ingredient checker",
-    "PODSI score",
     "fluoride toothpaste perioral dermatitis",
     "SLS perioral dermatitis",
     "periorificial dermatitis",
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ClearPD — Perioral Dermatitis Ingredient Checker",
     description:
-      "Free PODSI ingredient analysis for perioral dermatitis. Scan, photograph, or paste any product. No signup.",
+      "Free ingredient analysis for perioral dermatitis. Scan, photograph, or paste any product. No signup.",
     url: "/",
     siteName: "ClearPD",
     type: "website",
@@ -42,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ClearPD — Perioral Dermatitis Ingredient Checker",
     description:
-      "Free PODSI ingredient analysis for perioral dermatitis. No signup.",
+      "Free ingredient analysis for perioral dermatitis. No signup.",
   },
   robots: { index: true, follow: true },
 };

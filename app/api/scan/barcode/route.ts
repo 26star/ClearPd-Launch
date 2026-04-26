@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
         flagged_ingredients: [],
         helpful_ingredients: [],
         coverage: { matched: 0, total: 0, percentage: 0 },
-        why: 'Product not found in our database or Open Beauty Facts. Help build ClearPD by submitting your experience.',
+        why: 'Product not found.',
       },
       ingredients: [],
       unknown_count: 0,

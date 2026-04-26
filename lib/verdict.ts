@@ -216,7 +216,7 @@ export async function productVerdict(
     derivedWhy = `Contains ${helpful.length} ingredients with positive PD evidence.`
   } else if (validIngredientIds.length === 0) {
     derivedTier = 'insufficient_data'
-    derivedWhy = `No ingredients matched our PD database yet.`
+    derivedWhy = `No matches found.`
   } else {
     derivedTier = 'safe'
     derivedWhy = `No flagged ingredients detected.`
@@ -248,14 +248,8 @@ export async function productVerdict(
         why: derivedWhy,
       }
 
-  // Append coverage caveat when coverage is poor and we didn't already say "avoid"
-  if (
-    coverage.percentage < 0.5 &&
-    coverage.total > 0 &&
-    final.tier !== 'avoid'
-  ) {
-    final.why += ` Note: only ${coverage.matched} of ${coverage.total} ingredients recognized — verdict may be incomplete.`
-  }
+  // Coverage details are surfaced separately on the result page hero,
+  // so we keep verdict.why focused on the verdict itself — no caveat appendage.
 
   return final
 }

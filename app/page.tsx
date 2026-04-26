@@ -8,11 +8,11 @@ const CATEGORIES = [
   { slug: 'moisturizers', title: 'Moisturizers',
     blurb: 'Heavy occlusives like petrolatum, mineral oil, and coconut oil are documented PD triggers. Check yours against ClearPD’s database.' },
   { slug: 'cleansers', title: 'Cleansers',
-    blurb: 'SLS, sulfates, and fragrance are the top PD triggers in cleansers. Find barrier-safe formulas with PODSI scores.' },
+    blurb: 'SLS, sulfates, and fragrance are the top PD triggers in cleansers. Find barrier-safe formulas.' },
   { slug: 'sunscreens', title: 'Sunscreens',
     blurb: 'Chemical filters like avobenzone, octocrylene, and oxybenzone trigger many PD sufferers. Mineral SPFs with zinc oxide are usually safer.' },
   { slug: 'toothpaste', title: 'Toothpaste',
-    blurb: 'Toothpaste is the #1 overlooked PD trigger. Fluoride, SLS, and cinnamic aldehyde are the top three culprits — find PODSI-safe alternatives.' },
+    blurb: 'Toothpaste is the #1 overlooked PD trigger. Fluoride, SLS, and cinnamic aldehyde are the top three culprits — find PD-safe alternatives.' },
   { slug: 'lip-balm', title: 'Lip Balm',
     blurb: 'Lanolin, beeswax, and flavorings sit directly on the perioral skin all day. The most overlooked source of PD flares around the mouth.' },
 ] as const
@@ -33,17 +33,17 @@ const FEATURED_INGREDIENTS = [
 ] as const
 
 const FEATURED_PRODUCTS = [
-  { slug: 'vanicream-moisturizing-cream', name: 'Vanicream Moisturizing Cream', verdict: 'Safe', tone: 'safe', podsi: 'A+',
+  { slug: 'vanicream-moisturizing-cream', name: 'Vanicream Moisturizing Cream', verdict: 'Safe', tone: 'safe',
     line: 'Free of fragrance, dyes, lanolin, parabens, and formaldehyde. The most-recommended moisturizer by real PD sufferers.' },
-  { slug: 'cerave-moisturizing-cream', name: 'CeraVe Moisturizing Cream', verdict: 'Caution', tone: 'caution', podsi: 'B',
+  { slug: 'cerave-moisturizing-cream', name: 'CeraVe Moisturizing Cream', verdict: 'Caution', tone: 'caution',
     line: 'Contains ceramides (good) but also dimethicone and behentrimonium methosulfate. Mixed reports from real PD sufferers during active flares.' },
-  { slug: 'cetaphil-gentle-cleanser', name: 'Cetaphil Gentle Skin Cleanser', verdict: 'Safe', tone: 'safe', podsi: 'A',
+  { slug: 'cetaphil-gentle-cleanser', name: 'Cetaphil Gentle Skin Cleanser', verdict: 'Safe', tone: 'safe',
     line: 'Recently reformulated — SLS and parabens removed, niacinamide and a gentle surfactant added. Older bottles on shelves may still carry the old formula; check the label.' },
-  { slug: 'la-roche-posay-toleriane', name: 'La Roche-Posay Toleriane', verdict: 'Safe', tone: 'safe', podsi: 'A',
+  { slug: 'la-roche-posay-toleriane', name: 'La Roche-Posay Toleriane', verdict: 'Safe', tone: 'safe',
     line: 'Minimalist formula designed for reactive skin. Widely tolerated by real PD sufferers and a frequent dermatologist recommendation.' },
-  { slug: 'eucerin-aquaphor', name: 'Aquaphor Healing Ointment', verdict: 'Caution', tone: 'caution', podsi: 'B',
+  { slug: 'eucerin-aquaphor', name: 'Aquaphor Healing Ointment', verdict: 'Caution', tone: 'caution',
     line: 'Petrolatum-based occlusive that some PD sufferers use as a barrier sealant. However, it also contains lanolin alcohol — a known PD trigger. Use with caution and patch-test first.' },
-  { slug: 'colgate-total', name: 'Colgate Total', verdict: 'Avoid', tone: 'tertiary', podsi: 'F',
+  { slug: 'colgate-total', name: 'Colgate Total', verdict: 'Avoid', tone: 'tertiary',
     line: 'Contains SLS and zinc phosphate. Strong association with perioral flares around the mouth and chin. The #1 toothpaste flagged on ClearPD scans.' },
 ] as const
 
@@ -77,7 +77,7 @@ const FAQS: { q: string; a: string }[] = [
   { q: 'Does diet affect perioral dermatitis?',
     a: 'Evidence is limited. Some patients report improvement after cutting cinnamon, dairy, or sugar, but this is anecdotal. Diet is unlikely to be the primary trigger — focus on topical products first, then experiment with diet if needed.' },
   { q: 'How does ClearPD decide if a product is safe?',
-    a: 'ClearPD parses your product’s INCI list and matches each ingredient against a database of known PD triggers, alternatives, and safe ingredients. Each flagged ingredient is weighted by its position on the INCI list — ingredients at higher concentrations (positions 1–5) score more heavily than trace ingredients (position 20+). The result is a PODSI score from 0–100 with a tiered verdict: Safe (A+/A), Caution (B/C), or Avoid (D/F). The database is built from peer-reviewed dermatology literature, real PD sufferer experiences, and consensus from PD specialists. Every flagged ingredient links to its evidence and alternatives.' },
+    a: 'ClearPD parses your product’s INCI list and matches each ingredient against a database of known PD triggers, alternatives, and safe ingredients. Each flagged ingredient is weighted by its position on the INCI list — ingredients at higher concentrations (positions 1–5) score more heavily than trace ingredients (position 20+). The result is a tiered verdict: Safe, Caution, or Avoid. The database is built from peer-reviewed dermatology literature, real PD sufferer experiences, and consensus from PD specialists. Every flagged ingredient links to its evidence and alternatives.' },
   { q: 'Is ClearPD a substitute for a dermatologist?',
     a: 'No. ClearPD helps you eliminate ingredient triggers — a key part of recovery — but is not medical advice. If your rash is severe, spreading, or persistent for more than 4 weeks, see a board-certified dermatologist.' },
 ]
@@ -94,7 +94,7 @@ const organizationSchema = {
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
   description:
-    'ClearPD helps people with perioral dermatitis identify trigger ingredients in skincare, toothpaste, and cosmetics through position-weighted PODSI ingredient analysis.',
+    'ClearPD helps people with perioral dermatitis identify trigger ingredients in skincare, toothpaste, and cosmetics through position-weighted ingredient analysis.',
   sameAs: [],
 }
 
@@ -148,8 +148,8 @@ export default function HomePage() {
 
           <p className="mt-5 text-[15px] sm:text-base text-ink-variant leading-relaxed max-w-xl mx-auto">
             Paste any ingredient list &mdash; skincare, toothpaste, makeup, lip balm.
-            ClearPD&rsquo;s position-weighted PODSI score instantly flags the 40+
-            ingredients known to trigger PD flares. Free, no signup, no tracking.
+            ClearPD instantly flags the 40+ ingredients known to trigger PD
+            flares. Free, no signup, no tracking.
           </p>
 
           {/* Pill-shaped scanner — section 3 */}
@@ -159,7 +159,7 @@ export default function HomePage() {
 
           {/* Trust strip — five micro-claims that differentiate ClearPD */}
           <p className="mt-6 text-[12px] text-ink-variant tracking-wide max-w-2xl mx-auto">
-            Free forever &middot; No signup &middot; No tracking &middot; No dark patterns &middot; Built by a PD sufferer
+            Free forever &middot; No signup &middot; No tracking &middot; No dark patterns
           </p>
 
           {/* AEO direct-answer paragraph */}
@@ -169,8 +169,8 @@ export default function HomePage() {
             cinnamic aldehyde, heavy occlusives, and topical steroids. The checker above
             scans any product&rsquo;s ingredient list and returns a tiered verdict
             &mdash; Safe, Caution, or Avoid &mdash; using ClearPD&rsquo;s position-weighted
-            PODSI score, which weights each flagged ingredient by its position on the INCI
-            list. Paste a label, upload a photo, or scan a barcode to get an answer in
+            ingredient analysis, which weights each flagged ingredient by its position on
+            the INCI list. Paste a label, upload a photo, or scan a barcode to get an answer in
             seconds. Database built from peer-reviewed literature, dermatology consensus,
             and real PD sufferer evidence.
           </p>
@@ -195,8 +195,8 @@ export default function HomePage() {
               against a database of known PD triggers. Every flagged ingredient is weighted
               by its position on the INCI list &mdash; ingredients in positions 1&ndash;5
               (highest concentration) score more heavily than trace ingredients in position
-              20+. The result is a PODSI score from 0&ndash;100 with a Safe / Caution / Avoid
-              verdict. Paste a label, upload a photo, or scan a barcode.
+              20+. The result is a Safe / Caution / Avoid verdict. Paste a label, upload
+              a photo, or scan a barcode.
             </p>
           </details>
 
@@ -229,8 +229,8 @@ export default function HomePage() {
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
             The five product types most likely to trigger perioral dermatitis flares.
-            Each category has its own checker, top triggers list, and PODSI-scored
-            product recommendations.
+            Each category has its own checker, top triggers list, and vetted product
+            recommendations.
           </p>
           <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
             {CATEGORIES.map((c) => (
@@ -283,8 +283,8 @@ export default function HomePage() {
             Featured products
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
-            PODSI verdicts on the six most-searched PD products. Each verdict is based
-            on the full ingredient breakdown &mdash; click for the complete analysis.
+            Verdicts on the six most-searched PD products. Each verdict is based on
+            the full ingredient breakdown &mdash; click for the complete analysis.
           </p>
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {FEATURED_PRODUCTS.map((p) => (
@@ -299,9 +299,7 @@ export default function HomePage() {
                   </h3>
                   <VerdictPill tone={p.tone} verdict={p.verdict} />
                 </div>
-                <p className="mt-2 text-[13px] text-ink-variant leading-snug">
-                  <span className="font-medium text-ink">PODSI {p.podsi}.</span> {p.line}
-                </p>
+                <p className="mt-2 text-[13px] text-ink-variant leading-snug">{p.line}</p>
               </Link>
             ))}
           </div>
