@@ -5,76 +5,83 @@ import { VerdictPill } from '@/components/content/VerdictPill'
 // ─── Content data ────────────────────────────────────────────────────────────
 
 const CATEGORIES = [
-  { slug: 'moisturizers', title: 'Moisturizers',  blurb: 'Barrier-safe creams without the usual triggers.' },
-  { slug: 'cleansers',    title: 'Cleansers',     blurb: 'Gentle washes that won\u2019t strip the skin.' },
-  { slug: 'sunscreens',   title: 'Sunscreens',    blurb: 'Mineral and chemical SPFs, vetted ingredient-by-ingredient.' },
-  { slug: 'toothpaste',   title: 'Toothpaste',    blurb: 'Fluoride-free and SLS-free options that don\u2019t flare PD.' },
-  { slug: 'lip-balm',     title: 'Lip Balm',      blurb: 'No occlusives or flavorings linked to perioral flares.' },
+  { slug: 'moisturizers', title: 'Moisturizers',
+    blurb: 'Heavy occlusives like petrolatum, mineral oil, and coconut oil are documented PD triggers. Check yours against ClearPD’s database.' },
+  { slug: 'cleansers', title: 'Cleansers',
+    blurb: 'SLS, sulfates, and fragrance are the top PD triggers in cleansers. Find barrier-safe formulas with PODSI scores.' },
+  { slug: 'sunscreens', title: 'Sunscreens',
+    blurb: 'Chemical filters like avobenzone, octocrylene, and oxybenzone trigger many PD sufferers. Mineral SPFs with zinc oxide are usually safer.' },
+  { slug: 'toothpaste', title: 'Toothpaste',
+    blurb: 'Toothpaste is the #1 overlooked PD trigger. Fluoride, SLS, and cinnamic aldehyde are the top three culprits — find PODSI-safe alternatives.' },
+  { slug: 'lip-balm', title: 'Lip Balm',
+    blurb: 'Lanolin, beeswax, and flavorings sit directly on the perioral skin all day. The most overlooked source of PD flares around the mouth.' },
 ] as const
 
 const FEATURED_INGREDIENTS = [
   { slug: 'sodium-lauryl-sulfate', name: 'Sodium Lauryl Sulfate', verdict: 'Avoid', tone: 'tertiary',
-    answer: 'A foaming surfactant that disrupts the skin barrier. Strongly linked to perioral flares, especially in toothpaste.' },
-  { slug: 'fluoride', name: 'Fluoride', verdict: 'Caution', tone: 'caution',
-    answer: 'Some sufferers report flares from stannous and sodium fluoride. Try a fluoride-free paste for two weeks to test.' },
+    answer: 'The #1 reported PD trigger. A foaming surfactant that disrupts the skin barrier and is widely associated with perioral flares, especially in toothpaste and cleansers.' },
+  { slug: 'fluoride', name: 'Fluoride', verdict: 'Avoid', tone: 'tertiary',
+    answer: 'Sodium fluoride and stannous fluoride are documented PD triggers, especially for breakouts around the mouth and chin. Switch to a fluoride-free toothpaste for two weeks as a self-test.' },
   { slug: 'cinnamic-aldehyde', name: 'Cinnamic Aldehyde', verdict: 'Avoid', tone: 'tertiary',
-    answer: 'A flavoring used in cinnamon toothpaste and gum. A common, well-documented perioral-dermatitis trigger.' },
+    answer: 'A flavoring used in cinnamon toothpaste and chewing gum. One of the most well-documented perioral dermatitis triggers in dermatology literature.' },
   { slug: 'fragrance', name: 'Fragrance / Parfum', verdict: 'Avoid', tone: 'tertiary',
-    answer: '\u201CFragrance\u201D can mask 100+ chemicals. Eliminate from skincare and laundry while healing.' },
-  { slug: 'coconut-oil', name: 'Coconut Oil', verdict: 'Caution', tone: 'caution',
-    answer: 'Highly comedogenic and reported to worsen PD in many cases. Avoid until barrier is restored.' },
-  { slug: 'petrolatum', name: 'Petrolatum', verdict: 'Safe', tone: 'safe',
-    answer: 'Inert, occlusive, and non-comedogenic. One of the safest barrier ingredients during a PD flare.' },
+    answer: '“Fragrance” and “parfum” can mask 100+ undisclosed chemicals. Eliminate fragranced skincare, laundry detergent, and hair products during recovery.' },
+  { slug: 'coconut-oil', name: 'Coconut Oil', verdict: 'Avoid', tone: 'tertiary',
+    answer: 'Highly comedogenic (rating 4/5) and feeds Malassezia yeast. Widely reported by real PD sufferers as a flare trigger. Avoid until your skin barrier is fully restored.' },
+  { slug: 'petrolatum', name: 'Petrolatum', verdict: 'Caution', tone: 'caution',
+    answer: 'Inert and occlusive — tolerated by some PD sufferers and used in zero therapy as a barrier sealant. However, heavy occlusion can trap bacteria and worsen flares for many. Patch-test for 3 days before regular use.' },
 ] as const
 
 const FEATURED_PRODUCTS = [
-  { slug: 'vanicream-moisturizing-cream', name: 'Vanicream Moisturizing Cream', verdict: 'Safe',    tone: 'safe',
-    line: 'Free of fragrance, dyes, lanolin, parabens, and formaldehyde \u2014 a community staple.' },
-  { slug: 'cerave-moisturizing-cream',    name: 'CeraVe Moisturizing Cream',     verdict: 'Caution', tone: 'caution',
-    line: 'Ceramides help, but contains fragrance and dimethicone \u2014 mixed reports during active flares.' },
-  { slug: 'cetaphil-gentle-cleanser',     name: 'Cetaphil Gentle Skin Cleanser', verdict: 'Caution', tone: 'caution',
-    line: 'Low-foam, but contains parabens and stearyl alcohol \u2014 patch-test before daily use.' },
-  { slug: 'la-roche-posay-toleriane',     name: 'La Roche-Posay Toleriane',      verdict: 'Safe',    tone: 'safe',
-    line: 'Minimalist formula designed for reactive skin \u2014 widely tolerated by PD sufferers.' },
-  { slug: 'eucerin-aquaphor',             name: 'Aquaphor Healing Ointment',     verdict: 'Safe',    tone: 'safe',
-    line: 'Petrolatum-based occlusive \u2014 ideal as a barrier sealant overnight.' },
-  { slug: 'colgate-total',                name: 'Colgate Total',                 verdict: 'Avoid',   tone: 'tertiary',
-    line: 'Contains SLS and triclosan analogues \u2014 strong association with perioral flares.' },
+  { slug: 'vanicream-moisturizing-cream', name: 'Vanicream Moisturizing Cream', verdict: 'Safe', tone: 'safe', podsi: 'A+',
+    line: 'Free of fragrance, dyes, lanolin, parabens, and formaldehyde. The most-recommended moisturizer by real PD sufferers.' },
+  { slug: 'cerave-moisturizing-cream', name: 'CeraVe Moisturizing Cream', verdict: 'Caution', tone: 'caution', podsi: 'B',
+    line: 'Contains ceramides (good) but also dimethicone and behentrimonium methosulfate. Mixed reports from real PD sufferers during active flares.' },
+  { slug: 'cetaphil-gentle-cleanser', name: 'Cetaphil Gentle Skin Cleanser', verdict: 'Safe', tone: 'safe', podsi: 'A',
+    line: 'Recently reformulated — SLS and parabens removed, niacinamide and a gentle surfactant added. Older bottles on shelves may still carry the old formula; check the label.' },
+  { slug: 'la-roche-posay-toleriane', name: 'La Roche-Posay Toleriane', verdict: 'Safe', tone: 'safe', podsi: 'A',
+    line: 'Minimalist formula designed for reactive skin. Widely tolerated by real PD sufferers and a frequent dermatologist recommendation.' },
+  { slug: 'eucerin-aquaphor', name: 'Aquaphor Healing Ointment', verdict: 'Caution', tone: 'caution', podsi: 'B',
+    line: 'Petrolatum-based occlusive that some PD sufferers use as a barrier sealant. However, it also contains lanolin alcohol — a known PD trigger. Use with caution and patch-test first.' },
+  { slug: 'colgate-total', name: 'Colgate Total', verdict: 'Avoid', tone: 'tertiary', podsi: 'F',
+    line: 'Contains SLS and zinc phosphate. Strong association with perioral flares around the mouth and chin. The #1 toothpaste flagged on ClearPD scans.' },
 ] as const
 
 const FAQS: { q: string; a: string }[] = [
   { q: 'What is perioral dermatitis?',
-    a: 'Perioral dermatitis (PD) is a chronic inflammatory rash of small red papules and pustules around the mouth, nose, or eyes. It typically affects women aged 16\u201345, often triggered by topical steroids, fluoride toothpaste, heavy occlusives, or fragranced skincare. It is not contagious and usually resolves with trigger elimination.' },
+    a: 'Perioral dermatitis (PD) is a chronic inflammatory rash of small red papules and pustules around the mouth, nose, or eyes. It typically affects women aged 16–45, often triggered by topical steroids, fluoride toothpaste, heavy occlusives, or fragranced skincare. It is not contagious and usually resolves with trigger elimination.' },
   { q: 'How long does perioral dermatitis last?',
-    a: 'With strict zero-therapy (stopping all skincare except plain water and a bland moisturizer), PD usually clears in 4\u201312 weeks. With oral antibiotics (doxycycline or minocycline), most cases resolve in 6\u20138 weeks. Without intervention, PD can persist for months or years and recur.' },
+    a: 'With strict zero therapy (stopping all skincare except plain water and a bland moisturizer), PD usually clears in 4–12 weeks. With oral antibiotics (doxycycline or minocycline), most cases resolve in 6–8 weeks. Without intervention, PD can persist for months or years and recur.' },
   { q: 'Is perioral dermatitis caused by toothpaste?',
     a: 'For many people, yes. Sodium lauryl sulfate (SLS), cinnamic aldehyde flavoring, and fluoride in toothpaste are documented PD triggers. Switching to a SLS-free, fragrance-free toothpaste for two weeks is the cheapest, fastest diagnostic test you can run on yourself.' },
   { q: 'Can I use moisturizer with perioral dermatitis?',
-    a: 'Yes \u2014 but only minimalist, fragrance-free, occlusive-free formulas. Vanicream and La Roche-Posay Toleriane are widely tolerated. Avoid coconut oil, shea butter, and anything with \u201Cnatural\u201D essential oils during an active flare.' },
+    a: 'Yes — but only minimalist, fragrance-free, occlusive-free formulas. Vanicream and La Roche-Posay Toleriane are widely tolerated. Avoid coconut oil, shea butter, and anything with “natural” essential oils during an active flare.' },
   { q: 'Does sunscreen cause perioral dermatitis?',
     a: 'Some sunscreens do. Chemical filters like avobenzone and octocrylene, plus fragrance and certain emollients, are common triggers. Mineral (zinc oxide) sunscreens with short ingredient lists are usually safer. Always patch-test on the inner forearm for 3 days first.' },
   { q: 'Should I stop using all skincare?',
-    a: 'Most dermatologists recommend \u201Czero therapy\u201D \u2014 stopping all topical products including makeup, moisturizers, and cleansers \u2014 for at least 2 weeks. Wash with lukewarm water only. This isolates the trigger and lets the skin barrier reset before reintroducing anything.' },
+    a: 'Most dermatologists recommend zero therapy — stopping all topical products including makeup, moisturizers, and cleansers — for at least 2 weeks. Wash with lukewarm water only. This isolates the trigger and lets the skin barrier reset before reintroducing anything.' },
   { q: 'Can stress cause perioral dermatitis?',
-    a: 'Stress alone doesn\u2019t cause PD, but it can worsen flares by raising cortisol and disrupting the skin barrier. The primary causes are topical irritants and steroids. Manage stress as supportive care, not as a cure.' },
+    a: 'Stress alone doesn’t cause PD, but it can worsen flares by raising cortisol and disrupting the skin barrier. The primary causes are topical irritants and steroids. Manage stress as supportive care, not as a cure.' },
   { q: 'Is perioral dermatitis the same as rosacea?',
-    a: 'No. They look similar but differ. PD presents as small papules and pustules around the mouth, often with a clear margin around the lip line. Rosacea typically affects the cheeks and nose with persistent redness and visible blood vessels. Treatments overlap but aren\u2019t identical.' },
+    a: 'No. They look similar but differ. PD presents as small papules and pustules around the mouth, often with a clear margin around the lip line. Rosacea typically affects the cheeks and nose with persistent redness and visible blood vessels. Treatments overlap but aren’t identical.' },
   { q: 'Can I wear makeup with perioral dermatitis?',
-    a: 'Avoid makeup during active flares \u2014 especially foundation, concealer, and lip products. If you must, choose mineral powders without bismuth oxychloride, talc, or fragrance. Reintroduce one product at a time after the rash clears.' },
-  { q: 'What\u2019s the best treatment for perioral dermatitis?',
-    a: 'First-line: stop all topical steroids and trigger products. Second-line: topical metronidazole, azelaic acid, or pimecrolimus. Third-line: oral tetracyclines (doxycycline 100mg/day for 6\u20138 weeks). Always work with a dermatologist for prescription care.' },
+    a: 'Avoid makeup during active flares — especially foundation, concealer, and lip products. If you must, choose mineral powders without bismuth oxychloride, talc, or fragrance. Reintroduce one product at a time after the rash clears.' },
+  { q: 'What’s the best treatment for perioral dermatitis?',
+    a: 'First-line: stop all topical steroids and trigger products. Second-line: topical metronidazole, azelaic acid, or pimecrolimus. Third-line: oral tetracyclines (doxycycline 100mg/day for 6–8 weeks). Always work with a dermatologist for prescription care.' },
   { q: 'Can topical steroids cause perioral dermatitis?',
-    a: 'Yes \u2014 topical corticosteroids are the most common cause of PD. Even mild OTC hydrocortisone, used on the face for eczema or rashes, can trigger it. Stopping steroids often causes a rebound flare before improvement.' },
+    a: 'Yes — topical corticosteroids are the most common cause of PD. Even mild OTC hydrocortisone, used on the face for eczema or rashes, can trigger it. Stopping steroids often causes a rebound flare before improvement.' },
   { q: 'Is fluoride bad for perioral dermatitis?',
     a: 'For a subset of patients, yes. Sodium fluoride and stannous fluoride are documented triggers. Switching to a fluoride-free toothpaste for two weeks is a low-cost test. If your rash clears, you have your answer.' },
   { q: 'Can children get perioral dermatitis?',
     a: 'Yes. Pediatric perioral dermatitis is well-documented and often linked to inhaled steroids (asthma inhalers), topical steroids on eczema, or fluoride toothpaste. Treatment mirrors adult care but uses pediatric-safe antibiotics like erythromycin.' },
   { q: 'Does diet affect perioral dermatitis?',
-    a: 'Evidence is limited. Some patients report improvement after cutting cinnamon, dairy, or sugar, but this is anecdotal. Diet is unlikely to be the primary trigger \u2014 focus on topical products first, then experiment with diet if needed.' },
+    a: 'Evidence is limited. Some patients report improvement after cutting cinnamon, dairy, or sugar, but this is anecdotal. Diet is unlikely to be the primary trigger — focus on topical products first, then experiment with diet if needed.' },
   { q: 'How does ClearPD decide if a product is safe?',
-    a: 'ClearPD parses the ingredient list, matches each ingredient against our trigger database, and returns a tiered verdict (Safe / Caution / Avoid). The database is built from peer-reviewed literature plus thousands of self-reported community observations. Every flagged ingredient links to its evidence.' },
+    a: 'ClearPD parses your product’s INCI list and matches each ingredient against a database of known PD triggers, alternatives, and safe ingredients. Each flagged ingredient is weighted by its position on the INCI list — ingredients at higher concentrations (positions 1–5) score more heavily than trace ingredients (position 20+). The result is a PODSI score from 0–100 with a tiered verdict: Safe (A+/A), Caution (B/C), or Avoid (D/F). The database is built from peer-reviewed dermatology literature, real PD sufferer experiences, and consensus from PD specialists. Every flagged ingredient links to its evidence and alternatives.' },
   { q: 'Is ClearPD a substitute for a dermatologist?',
-    a: 'No. ClearPD helps you eliminate ingredient triggers \u2014 a key part of recovery \u2014 but is not medical advice. If your rash is severe, spreading, or persistent for more than 4 weeks, see a board-certified dermatologist.' },
+    a: 'No. ClearPD helps you eliminate ingredient triggers — a key part of recovery — but is not medical advice. If your rash is severe, spreading, or persistent for more than 4 weeks, see a board-certified dermatologist.' },
+  { q: 'What’s the difference between ClearPD and other ingredient checkers?',
+    a: 'Most ingredient checkers either flag every irritant generically or rely on AI-generated guesses. ClearPD is built specifically for perioral dermatitis, with a database curated from PD-specific clinical research and triggers documented by real PD sufferers. The PODSI score weights ingredients by their position on the INCI list, reflecting actual concentration. Built by a PD sufferer, free forever, no signup required.' },
 ]
 
 // ─── JSON-LD structured data ────────────────────────────────────────────────
@@ -89,7 +96,7 @@ const organizationSchema = {
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
   description:
-    'ClearPD helps people with perioral dermatitis identify trigger ingredients in skincare, toothpaste, and cosmetics through community-evidenced ingredient analysis.',
+    'ClearPD helps people with perioral dermatitis identify trigger ingredients in skincare, toothpaste, and cosmetics through position-weighted PODSI ingredient analysis.',
   sameAs: [],
 }
 
@@ -142,9 +149,9 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-5 text-[15px] sm:text-base text-ink-variant leading-relaxed max-w-xl mx-auto">
-            Paste any ingredient list &mdash; skincare, toothpaste, makeup.
-            Instantly flag the 40+ ingredients known to trigger PD flares.
-            Free, no signup.
+            Paste any ingredient list &mdash; skincare, toothpaste, makeup, lip balm.
+            ClearPD&rsquo;s position-weighted PODSI score instantly flags the 40+
+            ingredients known to trigger PD flares. Free, no signup, no tracking.
           </p>
 
           {/* Pill-shaped scanner — section 3 */}
@@ -152,15 +159,22 @@ export default function HomePage() {
             <HeroScanner />
           </div>
 
-          {/* AEO 60-word direct-answer paragraph (kept for SEO/AEO) */}
-          <p className="mt-10 text-[14px] text-ink-variant leading-relaxed max-w-2xl mx-auto">
-            <strong className="font-semibold text-ink">Is your skincare safe for perioral dermatitis?</strong>{' '}
-            Often, no. PD is triggered by common ingredients&mdash;fluoride, SLS,
-            fragrance, cinnamates, heavy occlusives, and topical steroids. The
-            checker above scans any product&rsquo;s ingredient list and
-            returns a tiered verdict&mdash;Safe, Caution, or Avoid&mdash;based on
-            community evidence from thousands of PD sufferers. Paste a label,
-            upload a photo, or scan a barcode to get an answer in seconds.
+          {/* Trust strip — five micro-claims that differentiate ClearPD */}
+          <p className="mt-6 text-[12px] text-ink-variant tracking-wide max-w-2xl mx-auto">
+            Free forever &middot; No signup &middot; No tracking &middot; No dark patterns &middot; Built by a PD sufferer
+          </p>
+
+          {/* AEO direct-answer paragraph */}
+          <p className="mt-8 text-[14px] text-ink-variant leading-relaxed max-w-2xl mx-auto">
+            Many common skincare and toothpaste ingredients trigger perioral dermatitis.
+            Documented culprits include sodium lauryl sulfate (SLS), fluoride, fragrance,
+            cinnamic aldehyde, heavy occlusives, and topical steroids. The checker above
+            scans any product&rsquo;s ingredient list and returns a tiered verdict
+            &mdash; Safe, Caution, or Avoid &mdash; using ClearPD&rsquo;s position-weighted
+            PODSI score, which weights each flagged ingredient by its position on the INCI
+            list. Paste a label, upload a photo, or scan a barcode to get an answer in
+            seconds. Database built from peer-reviewed literature, dermatology consensus,
+            and real PD sufferer evidence.
           </p>
         </div>
       </section>
@@ -172,19 +186,19 @@ export default function HomePage() {
           <details className="group rounded-2xl bg-surface-lowest border border-outline-variant/40 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
             <summary className="flex items-center justify-between cursor-pointer list-none">
               <h2 className="text-ink font-bold tracking-tight" style={{ fontSize: 22 }}>
-                What is perioral dermatitis?
+                How does the ClearPD ingredient checker work?
               </h2>
               <span className="material-symbols-outlined text-ink-variant transition-transform group-open:rotate-180" style={{ fontSize: 24 }}>
                 expand_more
               </span>
             </summary>
             <p className="mt-3 text-[15px] text-ink-variant leading-relaxed">
-              Perioral dermatitis is a chronic inflammatory rash of small red
-              papules and pustules around the mouth, nose, or eyes. It typically
-              affects women aged 16&ndash;45, with a clear margin around the lip
-              line. Causes include topical steroids, fluoride toothpaste, heavy
-              occlusives, and fragranced skincare. It is not contagious and
-              usually resolves with trigger elimination.
+              ClearPD parses your product&rsquo;s ingredient list and matches each ingredient
+              against a database of known PD triggers. Every flagged ingredient is weighted
+              by its position on the INCI list &mdash; ingredients in positions 1&ndash;5
+              (highest concentration) score more heavily than trace ingredients in position
+              20+. The result is a PODSI score from 0&ndash;100 with a Safe / Caution / Avoid
+              verdict. Paste a label, upload a photo, or scan a barcode.
             </p>
           </details>
 
@@ -198,12 +212,14 @@ export default function HomePage() {
               </span>
             </summary>
             <p className="mt-3 text-[15px] text-ink-variant leading-relaxed">
-              The most common triggers are topical corticosteroids (including OTC
-              hydrocortisone), fluoride and SLS in toothpaste, cinnamic-aldehyde
-              flavorings, fragrance, heavy occlusives like coconut oil, and
-              certain sunscreen filters. Hormonal shifts and inhaled steroids
-              can also contribute. Most cases improve when all topical products
-              are stopped for two weeks&mdash;the so-called &ldquo;zero therapy.&rdquo;
+              The most common triggers are topical corticosteroids (including over-the-counter
+              hydrocortisone), sodium lauryl sulfate and fluoride in toothpaste, cinnamic
+              aldehyde flavorings, fragrance and parfum, heavy occlusives like coconut oil
+              and lanolin, and certain chemical sunscreen filters. Hormonal shifts, inhaled
+              corticosteroids (asthma inhalers), and prolonged mask-wearing can also
+              contribute. The first-line community protocol is zero therapy &mdash; stopping
+              all topical products for 2&ndash;4 weeks while the skin barrier resets. Most
+              cases clear within 4&ndash;12 weeks once triggers are eliminated.
             </p>
           </details>
         </section>
@@ -214,7 +230,9 @@ export default function HomePage() {
             Check by category
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
-            Browse our vetted picks across the five product types most often implicated in PD flares.
+            The five product types most likely to trigger perioral dermatitis flares.
+            Each category has its own checker, top triggers list, and PODSI-scored
+            product recommendations.
           </p>
           <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
             {CATEGORIES.map((c) => (
@@ -238,7 +256,9 @@ export default function HomePage() {
             Featured ingredients
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
-            Six ingredients that come up over and over in flagged products.
+            The six ingredients that flag most often in scanned products. Click any
+            ingredient for the full PD safety profile, alternatives, and products
+            containing it.
           </p>
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {FEATURED_INGREDIENTS.map((i) => (
@@ -265,7 +285,8 @@ export default function HomePage() {
             Featured products
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
-            One-line verdicts on six products people ask about constantly.
+            PODSI verdicts on the six most-searched PD products. Each verdict is based
+            on the full ingredient breakdown &mdash; click for the complete analysis.
           </p>
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {FEATURED_PRODUCTS.map((p) => (
@@ -280,7 +301,9 @@ export default function HomePage() {
                   </h3>
                   <VerdictPill tone={p.tone} verdict={p.verdict} />
                 </div>
-                <p className="mt-2 text-[13px] text-ink-variant leading-snug">{p.line}</p>
+                <p className="mt-2 text-[13px] text-ink-variant leading-snug">
+                  <span className="font-medium text-ink">PODSI {p.podsi}.</span> {p.line}
+                </p>
               </Link>
             ))}
           </div>
@@ -289,10 +312,12 @@ export default function HomePage() {
         {/* 9. FAQ ──────────────────────────────────────────────────────── */}
         <section id="faq" className="scroll-mt-20 px-5 mt-12" aria-labelledby="faq-heading">
           <h2 id="faq-heading" className="text-ink font-bold tracking-tight" style={{ fontSize: 26 }}>
-            Frequently asked
+            Frequently asked questions
           </h2>
           <p className="mt-1 text-sm text-ink-variant">
-            {FAQS.length} answers, all marked up as FAQPage schema for AI search.
+            {FAQS.length} questions PD sufferers ask most often. Every answer is sourced
+            from clinical literature, dermatology consensus, and real PD sufferer
+            experiences.
           </p>
           <div className="mt-5 divide-y divide-outline-variant/40 rounded-2xl bg-surface-lowest border border-outline-variant/40 overflow-hidden">
             {FAQS.map((f, idx) => (
@@ -325,16 +350,20 @@ export default function HomePage() {
             About ClearPD
           </h2>
           <p className="mt-6 text-[17px] leading-[1.7] text-ink">
-            ClearPD is an ingredient and product safety checker for people with
-            perioral dermatitis. Paste a label, upload a photo, or scan a
-            barcode &mdash; every ingredient is matched against a database of
-            known PD triggers, and the product gets a tiered verdict: Safe,
-            Caution, or Avoid.
+            ClearPD is a free ingredient and product safety checker built specifically
+            for people with perioral dermatitis. Paste a label, upload a photo, or scan
+            a barcode &mdash; every ingredient is matched against ClearPD&rsquo;s
+            curated database of known PD triggers, weighted by INCI position, and
+            returned with a tiered PODSI verdict: Safe (A+/A), Caution (B/C), or
+            Avoid (D/F).
           </p>
-          <p className="mt-8 text-[12px] text-outline leading-relaxed max-w-md">
-            Built on community evidence from thousands of PD sufferers. Not a
-            substitute for a dermatologist.
+          <p className="mt-5 text-[15px] leading-[1.7] text-ink-variant">
+            Built by a PD sufferer in Glasgow, UK, drawing on peer-reviewed dermatology
+            literature, real PD sufferer experiences, and dermatology consensus on PD
+            triggers. Not a substitute for a dermatologist &mdash; for severe or
+            persistent symptoms, please see a board-certified specialist.
           </p>
+          <p className="mt-8 text-[12px] text-outline">Last updated: April 2026.</p>
         </section>
 
         {/* 11. EMAIL CAPTURE ───────────────────────────────────────────── */}
@@ -344,18 +373,19 @@ export default function HomePage() {
         >
           <div className="h-px w-12 bg-ink/30" aria-hidden />
           <div className="mt-6 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-variant">
-            Weekly digest
+            Newsletter
           </div>
           <h2
             id="email-heading"
             className="mt-3 text-ink font-semibold tracking-tight"
             style={{ fontSize: 24 }}
           >
-            Get safe-product picks weekly
+            The PD Recovery Newsletter
           </h2>
           <p className="mt-3 text-[14px] text-ink-variant leading-relaxed max-w-md">
-            One short email, every Sunday. New verdicts, ingredient deep-dives,
-            and recovery protocols. Unsubscribe in one click.
+            Get the safe-product picks, ingredient deep-dives, and recovery protocols
+            every Sunday. Written by someone with PD, for people with PD. One email,
+            no spam, unsubscribe in one click.
           </p>
           <form
             className="mt-5 flex flex-col sm:flex-row gap-2 max-w-md"
@@ -381,13 +411,17 @@ export default function HomePage() {
         </section>
 
         {/* FOOTER ──────────────────────────────────────────────────────── */}
-        <footer className="px-5 mt-16 pb-6 text-center text-xs text-ink-variant">
+        <footer className="px-5 mt-16 pb-6 text-center text-xs text-ink-variant max-w-2xl mx-auto">
           <p>
-            ClearPD provides ingredient analysis for educational purposes only.
-            Not medical advice. See a dermatologist for severe or persistent
-            symptoms.
+            ClearPD provides ingredient analysis for educational purposes only. Not
+            medical advice. See a board-certified dermatologist for severe or
+            persistent symptoms. Sources: peer-reviewed dermatology literature, real
+            PD sufferer experiences, dermatology consensus protocols.
           </p>
-          <p className="mt-2">&copy; {new Date().getFullYear()} ClearPD</p>
+          <p className="mt-3">
+            Last updated: April 2026 &middot; &copy; {new Date().getFullYear()} ClearPD &middot;
+            Built by a PD sufferer in Glasgow, UK
+          </p>
         </footer>
       </div>
 

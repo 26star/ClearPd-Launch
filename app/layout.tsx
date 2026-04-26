@@ -15,32 +15,34 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://clearpd.com"),
   title: {
-    default: "ClearPD — Is your skincare safe for perioral dermatitis?",
+    default: "ClearPD — Perioral Dermatitis Ingredient Checker",
     template: "%s · ClearPD",
   },
   description:
-    "Scan, photograph, or paste any product to check if it's safe for perioral dermatitis. Tiered ingredient verdicts (Safe / Caution / Avoid) based on community evidence from thousands of PD sufferers.",
+    "Check if your skincare, toothpaste, or makeup is safe for perioral dermatitis (PD). Free position-weighted PODSI analysis of 40+ known triggers. No signup.",
   keywords: [
     "perioral dermatitis",
-    "PD safe skincare",
     "perioral dermatitis ingredient checker",
+    "PD ingredient checker",
+    "PODSI score",
     "fluoride toothpaste perioral dermatitis",
     "SLS perioral dermatitis",
+    "periorificial dermatitis",
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "ClearPD — Is your skincare safe for perioral dermatitis?",
+    title: "ClearPD — Perioral Dermatitis Ingredient Checker",
     description:
-      "Tiered ingredient verdicts for perioral dermatitis, based on real community evidence.",
+      "Free PODSI ingredient analysis for perioral dermatitis. Scan, photograph, or paste any product. No signup.",
     url: "/",
     siteName: "ClearPD",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClearPD — Is your skincare safe for perioral dermatitis?",
+    title: "ClearPD — Perioral Dermatitis Ingredient Checker",
     description:
-      "Tiered ingredient verdicts for perioral dermatitis, based on real community evidence.",
+      "Free PODSI ingredient analysis for perioral dermatitis. No signup.",
   },
   robots: { index: true, follow: true },
 };
