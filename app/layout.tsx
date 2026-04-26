@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://clearpd.com"),
+  metadataBase: new URL("https://www.clearpd.com"),
   title: {
     default: "ClearPD — Perioral Dermatitis Ingredient Checker",
     template: "%s · ClearPD",

@@ -4,7 +4,7 @@
  * (with source='obf') so we never call OBF twice for the same barcode.
  */
 
-const OBF_USER_AGENT = 'ClearPD/1.0 - https://clearpd.com'
+const OBF_USER_AGENT = 'ClearPD/1.0 - https://www.clearpd.com'
 const OBF_BASE = 'https://world.openbeautyfacts.org/api/v2/product'
 
 export interface OBFProduct {

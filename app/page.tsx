@@ -84,7 +84,7 @@ const FAQS: { q: string; a: string }[] = [
 
 // ─── JSON-LD structured data ────────────────────────────────────────────────
 
-const SITE_URL = 'https://clearpd.com'
+const SITE_URL = 'https://www.clearpd.com'
 
 const organizationSchema = {
   '@context': 'https://schema.org',

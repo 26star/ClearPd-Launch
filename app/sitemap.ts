@@ -3,7 +3,7 @@ import { CATEGORIES } from '@/lib/content/categories'
 import { INGREDIENTS } from '@/lib/content/ingredients'
 import { PRODUCTS } from '@/lib/content/products'
 
-const SITE_URL = 'https://clearpd.com'
+const SITE_URL = 'https://www.clearpd.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()

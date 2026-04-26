@@ -9,7 +9,7 @@ import { VerdictPill } from '@/components/content/VerdictPill'
 
 type Props = { params: Promise<{ slug: string }> }
 
-const SITE_URL = 'https://clearpd.com'
+const SITE_URL = 'https://www.clearpd.com'
 
 export function generateStaticParams() {
   return CATEGORIES.map((c) => ({ slug: c.slug }))
